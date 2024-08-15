@@ -1,0 +1,124 @@
+---
+title: "Intro"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#"
+)
+```
+
+## RoboCop: An R Package for quickly creating PowerPoint presentations
+
+Most data professionals prefer to avoid using PowerPoint presentations due to the manual effort involved. However, many customers and stakeholders still expect PowerPoint presentations. To minimize the time spent creating them, you can use the RoboCop package, which builds on the powerful officer package. The idea is simple: you provide some content to a function set, and RoboCop handles the rest. While it’s not as sophisticated as officer for creating pixel-perfect slides, RoboCop quickly arranges content on slides using PowerPoint layouts. If the resulting layout isn't polished enough, it can be easily refined manually by others.
+
+## How to use
+
+After loading a layout via load_layout() function you can easily add content to what is called slide candidate. After adding content to a slide candidate, you can flush or materialize the candidate into a slide. As you have added several slides to the easy_pptx class, you can export the slide set to a presentation file. 
+
+### Import PowerPoint to extract layouts
+
+```r
+my_layout <- load_layout(system.file("extdata", "german_locale.pptx", package = "RoboCop"))
+
+# adding layout with duplicated and renaming duplicates
+my_layout_rename <- load_layout(system.file("extdata", "german_locale.pptx", package = "RoboCop"))
+
+# adding layout with duplicated and renaming duplicates
+my_layout_delete <- load_layout(system.file("extdata", "german_locale.pptx", package = "RoboCop"))
+```
+
+### Add content to a slide candidate
+
+A slide candidate is a basket / memory for added content until its flushed/materialized. You can conveniently add content step by step, precisely or by letting RoboCop guess or plug in multiple candidates by using lists, json etc. 
+
+```r
+# Add content by calling add_ functions to slide candidate
+add_title(my_layout, "Hello RoboCop!")
+add_subtitle(my_layout, "slide with add functions")
+add_text(my_layout, "RoboCop goes step by step...")
+
+## flush / materialize slide candidate
+flush(my_layout)
+
+# Add content by calling add() to slide candidate and let RoboCop guess its content
+add(my_layout, "Hello RoboCop!")
+add(my_layout, "slide with add() function")
+add(my_layout, "RoboCop guessed")
+
+flush(my_layout)
+
+slide(my_layout) <-
+  my_layout |>
+  add("Hello RoboCop!") |>
+  add("slide with adding via piping") |>
+  add("RoboCop likes piping")
+
+# # Add content by using magrittr piping and implicitly flushing by assignment
+# require(magrittr)
+# slide(my_layout) %<>%
+# add("Hello RoboCop!") %>%
+# add("slide with addding via magrittr piping") %>%
+# add("RoboCop likes magrittr")
+
+# Add content by using `+` and implicitly flushing by assignment
+slide(my_layout) <-
+  my_layout +
+  "Hello RoboCop!" +
+  "slide with addding via + operator" +
+  "RoboCop likes ggplot"
+
+
+# add a slide at once
+add_slide(
+  my_layout,
+  title = "Hello RoboCop!",
+  subtitle = "Slide at once added via add_slide(...)",
+  text = "RoboCop functions"
+)
+
+# add a slide at once
+list(
+  title = "Hello RoboCop!",
+  subtitle = "Slide at once added via add_slide(...)",
+  text = "RoboCop functions"
+) |>
+  add_slide(robopptx = my_layout)
+
+require(ggplot2)
+# add a slide at once
+add_slide(
+  my_layout,
+  title = "ggplot graph",
+  graph = ggplot(data = iris, mapping = aes(x = Species, y = Sepal.Length)) +
+    geom_point()
+)
+
+require(mschart)
+add_slide(
+  my_layout,
+  title = "mschart graph",
+  graph = ms_barchart(
+    data = browser_data, x = "browser",
+    y = "value", group = "serie"
+  )
+)
+
+add_slide(
+  my_layout,
+  title = "table",
+  table = head(iris)
+)
+```
+
+### Export slide set to a PowerPoint file
+```r
+## export slide set
+export(my_layout, "RoboCop.pptx")
+```

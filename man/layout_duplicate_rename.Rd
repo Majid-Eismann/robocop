@@ -7,8 +7,11 @@
 layout_duplicate_rename(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{TODO}
 }
 \description{
 Rename duplicated placeholders in PowerPoint Layout(s)
+}
+\examples{
+"todo"
 }

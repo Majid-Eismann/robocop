@@ -3,9 +3,9 @@
 #' @param x object
 #'
 #' @return character name of grouped class
+#' @keywords internal
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 group_r_class <- function(x) {
   result <-
     map_chr(
@@ -36,10 +36,9 @@ group_r_class <- function(x) {
 #'
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #'
-#' @return
+#' @return A `robopptx` object.
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 flush <- function(robopptx) {
   stopifnot("robopptx" %in% class(robopptx))
 
@@ -53,10 +52,9 @@ flush <- function(robopptx) {
 #'
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #'
-#' @return
+#' @return TODO
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 join_slides <- function(robopptx) {
   stopifnot("robopptx" %in% class(robopptx))
 
@@ -70,21 +68,26 @@ join_slides <- function(robopptx) {
 #' @param e1 robopptx Imported layout file from \link{load_layout}
 #' @param e2 object Content to add with \link{add}
 #'
-#' @return
+#' @return A `robopptx` object.
+#' @keywords internal
 #' @export
 "+.robopptx" <- function(e1, e2) add(robopptx = e1, content = e2)
 
 #' Register an R6 class as an S4 class
 #'
 #' This makes the R6 class "robopptx" available as an S4 class.
-#' @export
+#'
+#' # @export
+#'
 #' # setOlxdClass(c("robopptx")
 
 #' Method for the '+' generic for objects of class 'robopptx'
 #'
 #' @param e1 An object of class 'robopptx'
 #' @param e2 object Content to add with \link{add}
-#' @return robopptx
+#'
+#' @return A `robopptx` object.
+#' @keywords internal
 #' @export
 setMethod(
   "+",
@@ -101,7 +104,7 @@ setGeneric("slide", function(x) standardGeneric("slide"))
 #' Method for the 'myFunction' generic for objects of class 'MyClass'
 #'
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
-#' @return robopptx
+#' @return A `robopptx` object.
 #' @export
 setMethod("slide", "robopptx", function(x) x$slide)
 

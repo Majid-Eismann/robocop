@@ -11,6 +11,12 @@ add_subtitle(robopptx, subtitle = NULL)
 
 \item{sub_title}{character Subtitle to add to the current slide candidate}
 }
+\value{
+A \code{robopptx} object.
+}
 \description{
 Add subtitle to slide candidate
+}
+\examples{
+"todo"
 }

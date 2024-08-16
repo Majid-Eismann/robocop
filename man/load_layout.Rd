@@ -8,10 +8,15 @@ load_layout(path = NULL, ...)
 }
 \arguments{
 \item{...}{}
+
+\item{filepath}{File path.}
 }
 \value{
-robopptx
+A \code{robopptx} object.
 }
 \description{
 Load PowerPoint to extract its layout
+}
+\examples{
+"todo"
 }

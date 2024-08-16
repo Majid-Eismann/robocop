@@ -11,6 +11,12 @@ add_graph(robopptx, graph = NULL)
 
 \item{graph}{ggplot, mschart, charater Graph to add to the current slide candidate as ggplot, mschart or filepath to existing .img or .png file}
 }
+\value{
+A \code{robopptx} object.
+}
 \description{
 Add Graph to slide candidate
+}
+\examples{
+"todo"
 }

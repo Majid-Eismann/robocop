@@ -1,11 +1,9 @@
 #' Rename duplicated placeholders in PowerPoint Layout(s)
 #'
-#' @param x
-#'
-#' @return
+#' @param x TODO
+#' @return NULL
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 layout_duplicate_rename <- function(x) {
   stopifnot("rpptx" %in% class(x))
 
@@ -46,13 +44,12 @@ layout_duplicate_rename <- function(x) {
 
 #' Delete duplicated placeholders in PowerPoint Layout(s)
 #'
-#' @param x
-#' @param keep_max_id
-#'
-#' @return
+#' @param x TODO
+#' @param keep_max_id TODO
+#' @return NULL
 #' @export
 #'
-#' @examples
+#' @examples "todo"
 layout_duplicate_delete <- function(x, keep_max_id = TRUE) {
   stopifnot("rpptx" %in% class(x))
 

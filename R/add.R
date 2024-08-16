@@ -3,10 +3,9 @@
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #' @param content object Content to add to the current slide candidate
 #'
-#' @return
+#' @return A `robopptx` object.
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 add <- function(robopptx, content = NULL, class_easy = NA_character_) {
   stopifnot("robopptx" %in% class(my_layout))
 
@@ -30,10 +29,9 @@ add <- function(robopptx, content = NULL, class_easy = NA_character_) {
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #' @param title character Title to add to the current slide candidate
 #'
-#' @return
+#' @return A `robopptx` object.
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 add_title <- function(robopptx, title = NULL) {
   add(robopptx = robopptx, content = title, class_easy = "title")
 }
@@ -43,10 +41,8 @@ add_title <- function(robopptx, title = NULL) {
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #' @param sub_title character Subtitle to add to the current slide candidate
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return A `robopptx` object.
+#' @examples "todo"
 add_subtitle <- function(robopptx, subtitle = NULL) {
   add(robopptx = robopptx, content = subtitle, class_easy = "subtitle")
 }
@@ -56,10 +52,8 @@ add_subtitle <- function(robopptx, subtitle = NULL) {
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #' @param text character Text to add to the current slide candidate
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return A `robopptx` object.
+#' @examples "todo"
 add_text <- function(robopptx, text = NULL) {
   add(robopptx = robopptx, content = text, class_easy = "text")
 }
@@ -69,10 +63,9 @@ add_text <- function(robopptx, text = NULL) {
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #' @param footer character Footer to add to the current slide candidate
 #'
-#' @return
+#' @return A `robopptx` object.
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 add_footer <- function(robopptx, footer = NULL) {
   add(robopptx = robopptx, content = footer, class_easy = "footer")
 }
@@ -82,10 +75,9 @@ add_footer <- function(robopptx, footer = NULL) {
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #' @param table data.frame Table to add to the current slide candidate
 #'
-#' @return
+#' @return A `robopptx` object.
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 add_table <- function(robopptx, table = NULL) {
   table <- as.data.frame(table)
 
@@ -97,10 +89,9 @@ add_table <- function(robopptx, table = NULL) {
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #' @param graph ggplot, mschart, charater Graph to add to the current slide candidate as ggplot, mschart or filepath to existing .img or .png file
 #'
-#' @return
+#' @return A `robopptx` object.
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 add_graph <- function(robopptx, graph = NULL) {
   # if image is given as path - check file and filetype
   if (group_r_class(graph) == "character") {
@@ -116,10 +107,9 @@ add_graph <- function(robopptx, graph = NULL) {
 #' @param robopptx robopptx Imported layout file from \link{load_layout}
 #' @param ... object Content to add to the current slide candidate
 #'
-#' @return
+#' @return A `robopptx` object.
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 add_slide <- function(robopptx, ...) {
   stopifnot("robopptx" %in% class(robopptx))
 

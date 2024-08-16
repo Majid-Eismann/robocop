@@ -11,6 +11,12 @@ add_table(robopptx, table = NULL)
 
 \item{table}{data.frame Table to add to the current slide candidate}
 }
+\value{
+A \code{robopptx} object.
+}
 \description{
 Add Table to slide candidate
+}
+\examples{
+"todo"
 }

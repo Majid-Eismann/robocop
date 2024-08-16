@@ -2,7 +2,7 @@
 % Please edit documentation in R/internals.R
 \name{+.robopptx}
 \alias{+.robopptx}
-\title{Adding content with `+` operator}
+\title{Adding content with \code{+} operator}
 \usage{
 \method{+}{robopptx}(e1, e2)
 }
@@ -11,6 +11,10 @@
 
 \item{e2}{object Content to add with \link{add}}
 }
-\description{
-Adding content with `+` operator
+\value{
+A \code{robopptx} object.
 }
+\description{
+Adding content with \code{+} operator
+}
+\keyword{internal}

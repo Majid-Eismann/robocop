@@ -6,7 +6,7 @@
 #' @import purrr
 #' @return An object of class \code{"robopptx"}.
 #' @export
-#' @examples
+#' @examples "todo"
 #' obj <- new_robopptx()
 new_robopptx <- function(path = NULL, clean = c("rename", "delete")[1],
                          delete_slides = FALSE, position_precision = 0.5) {
@@ -40,7 +40,8 @@ new_robopptx <- function(path = NULL, clean = c("rename", "delete")[1],
   return(obj)
 }
 
-### robocop R6 class
+### robocop R6 class -----
+
 #' @title R6 Class to manage instructions for populating PowerPoint presentation
 #'
 #' @description

@@ -11,6 +11,12 @@ add_title(robopptx, title = NULL)
 
 \item{title}{character Title to add to the current slide candidate}
 }
+\value{
+A \code{robopptx} object.
+}
 \description{
 Add title to slide candidate
+}
+\examples{
+"todo"
 }

@@ -2,8 +2,6 @@
 #'
 #' @description
 #' Load layout file, add slides with corresponding contents and export presentation.
-#' @import data.table
-#' @import purrr
 #' @return An object of class \code{"robopptx"}.
 #' @export
 #' @examples "todo"
@@ -29,10 +27,7 @@ new_robopptx <- function(path = NULL, clean = c("rename", "delete")[1],
   }
 
   ## initialize robocop R6 class
-  obj$robocop <- robocop$new(
-    obj,
-    position_precision = position_precision
-  )
+  obj$robocop <- robocop$new(rpptx = obj, position_precision = position_precision)
 
   # add robopptx class
   class(obj) <- c("robopptx", class(obj))
@@ -40,15 +35,13 @@ new_robopptx <- function(path = NULL, clean = c("rename", "delete")[1],
   return(obj)
 }
 
+
 ### robocop R6 class -----
 
-#' @title R6 Class to manage instructions for populating PowerPoint presentation
+#' R6 Class to manage instructions for populating PowerPoint presentation
 #'
 #' @description
 #' Load layout file, add slides with corresponding contents and export presentation.
-#' @import R6
-#' @import data.table
-#' @import purrr
 #' @export
 robocop <-
   R6::R6Class(
@@ -57,9 +50,10 @@ robocop <-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #'
-    #' @param index (`character(1)`)\cr
-    #'   Identifier of the object.
+    #' @param rpptx (`rpptx`)\cr
+    #'   rpptx object as created by [officer::read_pptx].
+    #' @param position_precision (`numeric(1)`)\cr
+    #'   TODO
     public = list(
       initialize = function(rpptx, position_precision = 0.5) {
         stopifnot("rpptx" %in% class(rpptx))
@@ -231,21 +225,49 @@ robocop <-
         # empty slide in current slide slot
         self$slide_candidate <- copy(self$slide_empty)
       },
+
+      #' @field layout_pptx (`TODO`)\cr
+      #' TODO
       layout_pptx = NULL,
+
+      #' @field layout_overview (`data.frame`)\cr
+      #' TODO
       layout_overview = data.table(NULL),
+
+      #' @field class_mapping (`data.frame`)\cr
+      #' TODO
       class_mapping = data.table(NULL),
+
+      #' @description TODO
+      #' @param layout (`TODO`)\cr TODO
       show_layout = function(layout) {
 
       },
+
+      #' @description TODO
+      #' @param slide (`TODO`)\cr TODO
       show_slide = function(slide) {
 
       },
+
+      #' @description TODO
       show_slide_candidate = function() {
 
       },
+
+      #' @field slide_candidate (`data.frame`)\cr
+      #' TODO
       slide_candidate = data.table(NULL),
+
+      #' @field slide_empty (`data.frame`)\cr
+      #' TODO
       slide_empty = data.table(NULL),
+
+      #' @field slides (`list`)\cr
+      #' TODO
       slides = list(),
+
+      #' @description TODO
       flush_candidate = function() {
         # add slide to slidedeck
         self[["slides"]][[length(self$slides) + 1]] <- self$slide_candidate[!is.na(add_order)]
@@ -253,6 +275,8 @@ robocop <-
         # add emtpy instruction set
         self$slide_candidate <- copy(self$slide_empty)
       },
+
+      #' @description TODO
       join_slides = function() {
         if (length(self$slides)) {
           map(
@@ -313,6 +337,10 @@ robocop <-
           warnings("No slides to join. Forgot to add content and/or flush slide(s)?")
         }
       },
+
+      #' @description TODO
+      #' @param content_list (`list`)\cr
+      #'  TODO
       add_slide = function(content_list = list()) {
 
         if (length(unlist(content_list))) {

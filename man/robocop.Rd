@@ -6,6 +6,29 @@
 \description{
 Load layout file, add slides with corresponding contents and export presentation.
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{layout_pptx}}{(\code{TODO})\cr
+TODO}
+
+\item{\code{layout_overview}}{(\code{data.frame})\cr
+TODO}
+
+\item{\code{class_mapping}}{(\code{data.frame})\cr
+TODO}
+
+\item{\code{slide_candidate}}{(\code{data.frame})\cr
+TODO}
+
+\item{\code{slide_empty}}{(\code{data.frame})\cr
+TODO}
+
+\item{\code{slides}}{(\code{list})\cr
+TODO}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -31,8 +54,11 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{index}}{(\code{character(1)})\cr
-Identifier of the object.}
+\item{\code{rpptx}}{(\code{rpptx})\cr
+rpptx object as created by \link[officer:read_pptx]{officer::read_pptx}.}
+
+\item{\code{position_precision}}{(\code{numeric(1)})\cr
+TODO}
 }
 \if{html}{\out{</div>}}
 }
@@ -41,24 +67,41 @@ Identifier of the object.}
 \if{html}{\out{<a id="method-robocop-show_layout"></a>}}
 \if{latex}{\out{\hypertarget{method-robocop-show_layout}{}}}
 \subsection{Method \code{show_layout()}}{
+TODO
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$show_layout(layout)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{layout}}{(\code{TODO})\cr TODO}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-robocop-show_slide"></a>}}
 \if{latex}{\out{\hypertarget{method-robocop-show_slide}{}}}
 \subsection{Method \code{show_slide()}}{
+TODO
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$show_slide(slide)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{slide}}{(\code{TODO})\cr TODO}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-robocop-show_slide_candidate"></a>}}
 \if{latex}{\out{\hypertarget{method-robocop-show_slide_candidate}{}}}
 \subsection{Method \code{show_slide_candidate()}}{
+TODO
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$show_slide_candidate()}\if{html}{\out{</div>}}
 }
@@ -68,6 +111,7 @@ Identifier of the object.}
 \if{html}{\out{<a id="method-robocop-flush_candidate"></a>}}
 \if{latex}{\out{\hypertarget{method-robocop-flush_candidate}{}}}
 \subsection{Method \code{flush_candidate()}}{
+TODO
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$flush_candidate()}\if{html}{\out{</div>}}
 }
@@ -77,6 +121,7 @@ Identifier of the object.}
 \if{html}{\out{<a id="method-robocop-join_slides"></a>}}
 \if{latex}{\out{\hypertarget{method-robocop-join_slides}{}}}
 \subsection{Method \code{join_slides()}}{
+TODO
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$join_slides()}\if{html}{\out{</div>}}
 }
@@ -86,10 +131,19 @@ Identifier of the object.}
 \if{html}{\out{<a id="method-robocop-add_slide"></a>}}
 \if{latex}{\out{\hypertarget{method-robocop-add_slide}{}}}
 \subsection{Method \code{add_slide()}}{
+TODO
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$add_slide(content_list = list())}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{content_list}}{(\code{list})\cr
+TODO}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-robocop-clone"></a>}}

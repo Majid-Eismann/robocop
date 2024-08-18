@@ -37,7 +37,18 @@ export <- function(robopptx, to = NULL) {
         robopptx <-
           officer::ph_with(
             robopptx,
-            value = slide[element, content][[1]][[1]],
+            value = {
+              if (slide[element, robo_class == "graph" & class_r == "external_img"]) {
+
+                external_img(slide[element, content][[1]][[1]])
+
+              } else if  (slide[element, robo_class %in% c("graph", "table")]) {
+
+                slide[element, content][[1]]
+
+              } else slide[element, content][[1]][[1]]
+
+            },
             location = officer::ph_location_label(
               type = slide[element, type],
               ph_label = slide[element, ph_label]

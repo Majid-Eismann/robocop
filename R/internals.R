@@ -11,7 +11,10 @@ group_r_class <- function(x) {
     map_chr(
       class(x),
       switch,
-      character = "character",
+      character = "text",
+      POSIXct = "date",
+      POSIXt = "date",
+      Date = "date",
       ## graph
       ggplot = "graph",
       gg = "graph",

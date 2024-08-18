@@ -5,8 +5,9 @@
 #'
 #' @return A `robopptx` object.
 #' @export
+#'
 #' @examples "todo"
-add <- function(robopptx, content = NULL, class_easy = NA_character_) {
+add <- function(robopptx, content = NULL, robo_class = NA_character_, r_class = NA_character_) {
   stopifnot("robopptx" %in% class(my_layout))
 
   add_position <- robopptx$robocop$slide_candidate[!is.na(add_order), .N] + 1
@@ -15,8 +16,16 @@ add <- function(robopptx, content = NULL, class_easy = NA_character_) {
     add_position,
     ":="(
       add_order = add_position,
-      class_easy = ..class_easy,
-      class_r = group_r_class(..content),
+      robo_class = ifelse(
+        is.na(..robo_class),
+        NA_character_,
+        ..robo_class
+      ),
+      class_r = ifelse(
+        is.na(r_class),
+        class(..content)[length(class(..content))],
+        r_class
+      ),
       content = list(list(..content))
     )
   ]
@@ -33,7 +42,7 @@ add <- function(robopptx, content = NULL, class_easy = NA_character_) {
 #' @export
 #' @examples "todo"
 add_title <- function(robopptx, title = NULL) {
-  add(robopptx = robopptx, content = title, class_easy = "title")
+  add(robopptx = robopptx, content = title, robo_class = "title")
 }
 
 #' Add subtitle to slide candidate
@@ -44,7 +53,7 @@ add_title <- function(robopptx, title = NULL) {
 #' @return A `robopptx` object.
 #' @examples "todo"
 add_subtitle <- function(robopptx, subtitle = NULL) {
-  add(robopptx = robopptx, content = subtitle, class_easy = "subtitle")
+  add(robopptx = robopptx, content = subtitle, robo_class = "subtitle")
 }
 
 #' Add Text to slide candidate
@@ -55,7 +64,7 @@ add_subtitle <- function(robopptx, subtitle = NULL) {
 #' @return A `robopptx` object.
 #' @examples "todo"
 add_text <- function(robopptx, text = NULL) {
-  add(robopptx = robopptx, content = text, class_easy = "text")
+  add(robopptx = robopptx, content = text, robo_class = "text")
 }
 
 #' Add Text to slide candidate
@@ -67,7 +76,7 @@ add_text <- function(robopptx, text = NULL) {
 #' @export
 #' @examples "todo"
 add_footer <- function(robopptx, footer = NULL) {
-  add(robopptx = robopptx, content = footer, class_easy = "footer")
+  add(robopptx = robopptx, content = footer, robo_class = "footer")
 }
 
 #' Add Table to slide candidate
@@ -81,7 +90,7 @@ add_footer <- function(robopptx, footer = NULL) {
 add_table <- function(robopptx, table = NULL) {
   table <- as.data.frame(table)
 
-  add(robopptx = robopptx, content = table, class_easy = "table")
+  add(robopptx = robopptx, content = table, robo_class = "table")
 }
 
 #' Add Graph to slide candidate
@@ -94,12 +103,16 @@ add_table <- function(robopptx, table = NULL) {
 #' @examples "todo"
 add_graph <- function(robopptx, graph = NULL) {
   # if image is given as path - check file and filetype
-  if (group_r_class(graph) == "character") {
+  if (class(graph)[1] == "character") {
     stopifnot(file.exists(graph))
     stopifnot(grepl("[.](img|png)$", graph))
+
+    add(robopptx, content = graph, robo_class = "graph", r_class = "external_img")
+
+  } else {
+    add(robopptx, content = graph, robo_class = "graph")
   }
 
-  add(robopptx, content = graph, class_easy = "graph")
 }
 
 #' Add content to slide candidate
@@ -119,7 +132,7 @@ add_slide <- function(robopptx, ...) {
     args <- unlist(args, recursive = F)
   }
 
-  match.arg(names(args), unique(robopptx$robocop$class_mapping$class_easy), several.ok = TRUE)
+  match.arg(names(args), unique(robopptx$robocop$class_mapping$robo_class), several.ok = TRUE)
 
   robopptx$robocop$add_slide(args)
 

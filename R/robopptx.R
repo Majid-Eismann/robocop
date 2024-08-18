@@ -69,21 +69,21 @@ robocop <-
               "body", "body", "body",
               "ctrTitle", "subTitle",
               "ftr", "sldNum", "title",
-              "pic", "media"
+              "pic", "media", "dt"
             ),
             # easy pptx classes
-            class_easy = c(
+            robo_class = c(
               "text", "table", "graph",
               "title", "subtitle",
               "footer", "slidenumber", "title",
-              "graph", "graph"
+              "graph", "graph", "date"
             ),
             # R classes for mapping
             class_r = c(
-              "character", "data.frame", "character",
+              "character", "data.frame", "external_img",
               "character", "character",
               "character", "numeric", "character",
-              "character", "character"
+              "external_img", "external_img", "date"
             )
           ) |>
           as.data.table()
@@ -92,7 +92,7 @@ robocop <-
           rbind(
             self$class_mapping,
             self$class_mapping[
-              class_easy == "graph",
+              robo_class == "graph",
             ][
               rep(1:.N, length(graph_classes)),
             ][,
@@ -183,7 +183,7 @@ robocop <-
             unique(.SD, by = "id")[, paste0(
               substr(h_align, 1, 1),
               substr(v_align, 1, 1),
-              substr(class_easy, 1, 3)
+              substr(robo_class, 1, 3)
             )
             ] |>
               paste0(collapse = "")
@@ -217,7 +217,7 @@ robocop <-
         self$slide_empty <-
           data.table(
             add_order    = NA_integer_,
-            class_easy   = NA_character_,
+            robo_class   = NA_character_,
             class_r      = NA_character_,
             content      = list(list())
           )[rep(1, self$layout_overview[, max(placeholder_n)])]
@@ -278,39 +278,44 @@ robocop <-
 
       #' @description TODO
       join_slides = function() {
+
+        # self <- my_layout$robocop
+        # .x <- 2
+
         if (length(self$slides)) {
           map(
             1:length(self$slides),
             ~ {
+
+              # map slide and layout by robo_class and class_r by layout slide_id
               self$layout_overview[
                 placeholder_n >= self$slides[[.x]][, .N],
-                list(id, slide_class, placeholder_n, class_easy, slide_order, default_slide_perclass, class_count = order(slide_order)),
-                by = c("class_r", "slide_id")
+                list(id, slide_class, placeholder_n, slide_order, default_slide_perclass, class_count = order(slide_order)),
+                by = c("robo_class", "slide_id", "class_r")
               ] |>
                 merge(
                   self$slides[[.x]][
-                    !is.na(class_easy),
-                    list(class_easy, slide_filter = T, class_count = order(add_order)),
-                    by = "class_r"
+                    !is.na(robo_class),
+                    list(slide_filter = T, class_count = order(add_order)),
+                    by = c("class_r", "robo_class")
                   ],
-                  by = c("class_r", "class_easy", "class_count"),
+                  by = c("robo_class", "class_count", "class_r"),
                   all.x = T
                 ) ->
               layout_selection
 
-              # complete easy_class(es)
-              if (self$slides[[.x]][, any(is.na(class_easy))]) {
+              # complete robo_class(es)
+              if (self$slides[[.x]][, any(is.na(robo_class))]) {
                 layout_selection <-
                   layout_selection |>
                   merge(
-                    self$slides[[.x]][is.na(class_easy), list(add_order, class_r, slide_filter = T)],
+                    self$slides[[.x]][is.na(robo_class), list(add_order, class_r, slide_filter = T)],
                     by.x = c("class_r", "slide_order"),
                     by.y = c("class_r", "add_order"),
                     all.x = T
                   )
 
-                layout_selection[
-                  ,
+                layout_selection[,
                   slide_filter := slide_filter.x | slide_filter.y
                 ]
                 layout_selection[, ":="(slide_filter.x = NULL, slide_filter.y = NULL)]
@@ -323,13 +328,13 @@ robocop <-
                   by = c("slide_id", "slide_class", "default_slide_perclass", "placeholder_n")
                 ][V1 == max(V1) & default_slide_perclass == slide_id, ][placeholder_n == min(placeholder_n), ][slide_id == min(slide_id), slide_id]
 
-              self$slides[[.x]][, list(add_order, content)] %>%
+              self$slides[[.x]][, list(add_order, class_r, content)] %>%
                 merge(
                   self$layout_overview[
                     slide_id == selected_layout,
                   ],
-                  by.x = "add_order",
-                  by.y = "slide_order"
+                  by.x = c("add_order", "class_r"),
+                  by.y = c("slide_order", "class_r")
                 )
             }
           )
@@ -352,8 +357,8 @@ robocop <-
             1:length(content_list),
             ":="(
               add_order = 1:length(content_list),
-              class_easy = names(content_list),
-              class_r = map_chr(content_list, group_r_class),
+              robo_class = names(content_list),
+              class_r = map_chr(content_list, ~class(.x)[length(class(.x))]),
               content = setNames(content_list, NULL)
             )
           ]

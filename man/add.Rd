@@ -4,7 +4,12 @@
 \alias{add}
 \title{Add content to slide candidate}
 \usage{
-add(robopptx, content = NULL, class_easy = NA_character_)
+add(
+  robopptx,
+  content = NULL,
+  robo_class = NA_character_,
+  r_class = NA_character_
+)
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}

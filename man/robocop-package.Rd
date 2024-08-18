@@ -5,7 +5,7 @@
 \alias{robocop-package}
 \title{robocop: Easily populate PowerPoint presentation using its layouts}
 \description{
-robocop is an externsion to the officer package to populate PowerPoint presentations very fast.
+robocop is an extension to the officer package to populate PowerPoint presentations very fast.
 }
 \author{
 \strong{Maintainer}: Majid Eismann \email{yourself@somewhere.net}

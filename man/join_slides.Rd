@@ -9,6 +9,12 @@ join_slides(robopptx)
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}
 }
+\value{
+TODO
+}
 \description{
 Flush / materialize current slide candidate into a slide
+}
+\examples{
+"todo"
 }

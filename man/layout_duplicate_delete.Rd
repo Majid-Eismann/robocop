@@ -7,8 +7,13 @@
 layout_duplicate_delete(x, keep_max_id = TRUE)
 }
 \arguments{
-\item{keep_max_id}{}
+\item{x}{TODO}
+
+\item{keep_max_id}{TODO}
 }
 \description{
 Delete duplicated placeholders in PowerPoint Layout(s)
+}
+\examples{
+"todo"
 }

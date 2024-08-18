@@ -1,11 +1,21 @@
 Package: robocop
-Type: Package
 Title: Easily populate PowerPoint presentation using its layouts
 Version: 0.1.0
-Author: Majid Eismann
-Maintainer: Majid Eismann <yourself@somewhere.net>
+Authors@R: c(
+    person(given = "Majid", family = "Eismann", email = "yourself@somewhere.net", 
+           role = c("aut", "cre")),
+    person(given = "Mark", family = "Heckmann", email = "heckmann.mark@gmail.com", 
+           role = c("aut"), comment = c(ORCID = "0000-0002-0736-7417"))
+    )
 Description: robocop is an externsion to the officer package to populate PowerPoint presentations very fast. 
+License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.3.0
-License: MIT
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports:
+  data.table,
+  R6,
+  purrr
+Suggests: 
+  styler,
+  testthat

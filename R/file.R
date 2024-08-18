@@ -1,12 +1,11 @@
 #' Load PowerPoint to extract its layout
 #'
-#' @param filepath
+#' @param filepath File path.
 #' @param ...
 #'
-#' @return robopptx
+#' @return A `robopptx` object.
 #' @export
-#'
-#' @examples
+#' @examples "todo"
 load_layout <- function(path = NULL, ...) {
   stopifnot(!is.null(path))
   stopifnot(file.exists(path))
@@ -18,13 +17,13 @@ load_layout <- function(path = NULL, ...) {
 
 #' Export populated slides to a PowerPoint presentation
 #'
-#' @param robopptx
-#' @param to
+#' @param robopptx A `robopptx` object.
+#' @param to TODO
 #'
-#' @return
+#' @return TODO
 #' @export
 #'
-#' @examples
+#' @examples "todo"
 export <- function(robopptx, to = NULL) {
   stopifnot("robopptx" %in% class(robopptx))
 

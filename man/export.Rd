@@ -7,8 +7,16 @@
 export(robopptx, to = NULL)
 }
 \arguments{
-\item{to}{}
+\item{robopptx}{A \code{robopptx} object.}
+
+\item{to}{TODO}
+}
+\value{
+TODO
 }
 \description{
 Export populated slides to a PowerPoint presentation
+}
+\examples{
+"todo"
 }

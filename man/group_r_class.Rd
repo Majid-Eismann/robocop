@@ -15,3 +15,7 @@ character name of grouped class
 \description{
 Group common R classes for a PowerPoint placeholder mapping
 }
+\examples{
+"todo"
+}
+\keyword{internal}

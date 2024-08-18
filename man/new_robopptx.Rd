@@ -18,5 +18,6 @@ An object of class \code{"robopptx"}.
 Load layout file, add slides with corresponding contents and export presentation.
 }
 \examples{
+"todo"
 obj <- new_robopptx()
 }

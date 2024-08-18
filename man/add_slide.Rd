@@ -11,6 +11,12 @@ add_slide(robopptx, ...)
 
 \item{...}{object Content to add to the current slide candidate}
 }
+\value{
+A \code{robopptx} object.
+}
 \description{
 Add content to slide candidate
+}
+\examples{
+"todo"
 }

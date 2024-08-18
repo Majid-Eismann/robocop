@@ -10,7 +10,7 @@
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}
 }
 \value{
-robopptx
+A \code{robopptx} object.
 }
 \description{
 Method for the 'myFunction' generic for objects of class 'MyClass'

@@ -12,8 +12,17 @@
 \item{e2}{object Content to add with \link{add}}
 }
 \value{
-robopptx
+A \code{robopptx} object.
 }
 \description{
 This makes the R6 class "robopptx" available as an S4 class.
 }
+\section{@export}{
+
+}
+
+\section{setOlxdClass(c("robopptx")}{
+Method for the '+' generic for objects of class 'robopptx'
+}
+
+\keyword{internal}

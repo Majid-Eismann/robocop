@@ -11,6 +11,12 @@ add_text(robopptx, text = NULL)
 
 \item{text}{character Text to add to the current slide candidate}
 }
+\value{
+A \code{robopptx} object.
+}
 \description{
 Add Text to slide candidate
+}
+\examples{
+"todo"
 }

@@ -23,7 +23,7 @@ Load layout file, add slides with corresponding contents and export presentation
 \if{html}{\out{<a id="method-robocop-new"></a>}}
 \if{latex}{\out{\hypertarget{method-robocop-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new instance of this [R6][R6::R6Class] class.
+Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$new(rpptx, position_precision = 0.5)}\if{html}{\out{</div>}}
 }
@@ -31,7 +31,7 @@ Creates a new instance of this [R6][R6::R6Class] class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{index}}{(`character(1)`)\cr
+\item{\code{index}}{(\code{character(1)})\cr
 Identifier of the object.}
 }
 \if{html}{\out{</div>}}

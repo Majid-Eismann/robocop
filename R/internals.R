@@ -37,7 +37,7 @@ group_r_class <- function(x) {
 
 #' Flush / materialize current slide candidate into a slide
 #'
-#' @param robopptx robopptx Imported layout file from \link{load_layout}
+#' @param robopptx robopptx Imported layout file from [load_layout]
 #'
 #' @return A `robopptx` object.
 #' @export
@@ -53,7 +53,7 @@ flush <- function(robopptx) {
 
 #' Flush / materialize current slide candidate into a slide
 #'
-#' @param robopptx robopptx Imported layout file from \link{load_layout}
+#' @param robopptx robopptx Imported layout file from [load_layout]
 #'
 #' @return TODO
 #' @export
@@ -68,8 +68,8 @@ join_slides <- function(robopptx) {
 
 #' Adding content with `+` operator
 #'
-#' @param e1 robopptx Imported layout file from \link{load_layout}
-#' @param e2 object Content to add with \link{add}
+#' @param e1 robopptx Imported layout file from [load_layout]
+#' @param e2 object Content to add with [add]
 #'
 #' @return A `robopptx` object.
 #' @keywords internal
@@ -87,14 +87,14 @@ join_slides <- function(robopptx) {
 #' Method for the '+' generic for objects of class 'robopptx'
 #'
 #' @param e1 An object of class 'robopptx'
-#' @param e2 object Content to add with \link{add}
+#' @param e2 object Content to add with [add]
 #'
 #' @return A `robopptx` object.
 #' @keywords internal
 #' @export
 setMethod(
   "+",
-  signature = "robopptx",
+  signature = c("robopptx", "ANY"),
   definition = function(e1, e2) RoboCop::add(robopptx = e1, content = e2)
 )
 
@@ -106,7 +106,7 @@ setGeneric("slide", function(x) standardGeneric("slide"))
 
 #' Method for the 'myFunction' generic for objects of class 'MyClass'
 #'
-#' @param robopptx robopptx Imported layout file from \link{load_layout}
+#' @param robopptx robopptx Imported layout file from [load_layout]
 #' @return A `robopptx` object.
 #' @export
 setMethod("slide", "robopptx", function(x) x$slide)

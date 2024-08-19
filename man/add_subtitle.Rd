@@ -4,7 +4,13 @@
 \alias{add_subtitle}
 \title{Add subtitle to slide candidate}
 \usage{
-add_subtitle(robopptx, subtitle = NULL)
+add_subtitle(
+  robopptx,
+  subtitle = NULL,
+  slide = NA_integer_,
+  shapeid = NA_integer_,
+  hint = NULL
+)
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}

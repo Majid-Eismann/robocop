@@ -16,6 +16,7 @@ Load layout file, add slides with corresponding contents and export presentation
 \item \href{#method-robocop-flush_candidate}{\code{robocop$flush_candidate()}}
 \item \href{#method-robocop-join_slides}{\code{robocop$join_slides()}}
 \item \href{#method-robocop-add_slide}{\code{robocop$add_slide()}}
+\item \href{#method-robocop-explain}{\code{robocop$explain()}}
 \item \href{#method-robocop-clone}{\code{robocop$clone()}}
 }
 }
@@ -88,6 +89,15 @@ Identifier of the object.}
 \subsection{Method \code{add_slide()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$add_slide(content_list = list())}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-robocop-explain"></a>}}
+\if{latex}{\out{\hypertarget{method-robocop-explain}{}}}
+\subsection{Method \code{explain()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{robocop$explain()}\if{html}{\out{</div>}}
 }
 
 }

@@ -4,7 +4,13 @@
 \alias{add_text}
 \title{Add Text to slide candidate}
 \usage{
-add_text(robopptx, text = NULL)
+add_text(
+  robopptx,
+  text = NULL,
+  slide = NA_integer_,
+  shapeid = NA_integer_,
+  hint = NULL
+)
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}

@@ -4,7 +4,14 @@
 \alias{add_graph}
 \title{Add Graph to slide candidate}
 \usage{
-add_graph(robopptx, graph = NULL)
+add_graph(
+  robopptx,
+  graph = NULL,
+  slide = NA_integer_,
+  shapeid = NA_integer_,
+  hint = NULL,
+  ...
+)
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}

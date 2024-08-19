@@ -4,7 +4,13 @@
 \alias{add_table}
 \title{Add Table to slide candidate}
 \usage{
-add_table(robopptx, table = NULL)
+add_table(
+  robopptx,
+  table = NULL,
+  slide = NA_integer_,
+  shapeid = NA_integer_,
+  hint = NULL
+)
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}

@@ -143,6 +143,7 @@ robocop <-
         # save layout overview
         self$layout_overview <- rbindlist(result)
 
+        # add robo_classes to map rpptx and R classes
         self$layout_overview <-
           self$layout_overview |>
           merge(
@@ -153,11 +154,13 @@ robocop <-
             allow.cartesian = T
           )
 
+        # mark slides with duplicated powerpoint classes
         self$layout_overview[,
           multi_type := uniqueN(id)>1,
           by = c("slide_id", "type")
         ]
 
+        # divide slide into bottom/top and left/center/right
         self$layout_overview[,
           ":="(
             v_align = ifelse(
@@ -181,9 +184,8 @@ robocop <-
           by = "slide_id"
         ]
 
-        ### Prepare Class
-
-        ## Layout Set
+        # Make unique class per slide by combining its layout placeholder classes
+        #  and its orientation
         self$layout_overview[,
           slide_class := {
             unique(.SD, by = "id")[, paste0(
@@ -197,11 +199,11 @@ robocop <-
           by = "slide_id"
         ]
 
-        ## Layout Set
+        # add layout slide helper columns: number of placeholder, default slide id per class
         self$layout_overview[, placeholder_n := uniqueN(id), by = "slide_id"]
         self$layout_overview[, default_slide_perclass := min(slide_id), by = "slide_class"]
 
-        ## slide order
+        # slide order
         self$layout_overview[,
           slide_order := match(
             id,
@@ -225,7 +227,11 @@ robocop <-
             add_order    = NA_integer_,
             robo_class   = NA_character_,
             class_r      = NA_character_,
-            content      = list(list())
+            content      = list(list()),
+            dotdotdot    = list(list()),
+            hint         = list(list()),
+            user_selection_slide = NA_integer_,
+            user_selection_shapeid = NA_integer_
           )[rep(1, self$layout_overview[, max(placeholder_n)])]
 
         # empty slide in current slide slot
@@ -340,6 +346,9 @@ robocop <-
         } else {
           warning("Empty list passed to add_slide method from easy_pptx")
         }
+      },
+      explain = function() {
+
       }
     )
   )

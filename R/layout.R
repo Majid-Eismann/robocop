@@ -81,3 +81,15 @@ layout_duplicate_delete <- function(x, keep_max_id = TRUE) {
     }
   }
 }
+
+#' Delete Layout
+#'
+#' @param x TODO
+#' @return NULL
+#' @export
+#'
+#' @examples "todo"
+layout_delete <- function(x, layout_id) {
+  stopifnot("rpptx" %in% class(x))
+
+}

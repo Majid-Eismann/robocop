@@ -4,7 +4,13 @@
 \alias{add_title}
 \title{Add title to slide candidate}
 \usage{
-add_title(robopptx, title = NULL)
+add_title(
+  robopptx,
+  title = NULL,
+  slide = NA_integer_,
+  shapeid = NA_integer_,
+  hint = NULL
+)
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}

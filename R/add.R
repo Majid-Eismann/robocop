@@ -7,8 +7,11 @@
 #' @export
 #'
 #' @examples "todo"
-add <- function(robopptx, content = NULL, robo_class = NA_character_, r_class = NA_character_) {
+add <- function(robopptx, content = NULL, slide = NA_integer_, shapeid = NA_integer_,
+                hint = NULL, ..., robo_class = NA_character_, r_class = NA_character_) {
   stopifnot("robopptx" %in% class(my_layout))
+
+  dots <- list(...)
 
   add_position <- robopptx$robocop$slide_candidate[!is.na(add_order), .N] + 1
 
@@ -16,6 +19,11 @@ add <- function(robopptx, content = NULL, robo_class = NA_character_, r_class = 
     add_position,
     ":="(
       add_order = add_position,
+      content = list(list(..content)),
+      user_selection_slide = slide,
+      user_selection_shapeid = shapeid,
+      hint = list(list(hint)),
+      dotdotdot = list(list(dots)),
       robo_class = ifelse(
         is.na(..robo_class),
         NA_character_,
@@ -25,8 +33,7 @@ add <- function(robopptx, content = NULL, robo_class = NA_character_, r_class = 
         is.na(r_class),
         class(..content)[length(class(..content))],
         r_class
-      ),
-      content = list(list(..content))
+      )
     )
   ]
 
@@ -41,8 +48,16 @@ add <- function(robopptx, content = NULL, robo_class = NA_character_, r_class = 
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_title <- function(robopptx, title = NULL) {
-  add(robopptx = robopptx, content = title, robo_class = "title")
+add_title <- function(robopptx, title = NULL, slide = NA_integer_,
+                      shapeid = NA_integer_, hint = NULL) {
+  add(
+    robopptx = robopptx,
+    content = title,
+    robo_class = "title",
+    slide = slide,
+    shapeid = shapeid,
+    hint = hint
+  )
 }
 
 #' Add subtitle to slide candidate
@@ -51,9 +66,20 @@ add_title <- function(robopptx, title = NULL) {
 #' @param sub_title character Subtitle to add to the current slide candidate
 #'
 #' @return A `robopptx` object.
+#' @export
 #' @examples "todo"
-add_subtitle <- function(robopptx, subtitle = NULL) {
-  add(robopptx = robopptx, content = subtitle, robo_class = "subtitle")
+add_subtitle <- function(robopptx, subtitle = NULL, slide = NA_integer_,
+                         shapeid = NA_integer_, hint = NULL) {
+
+  add(
+    robopptx = robopptx,
+    content = subtitle,
+    robo_class = "subtitle",
+    slide = slide,
+    shapeid = shapeid,
+    hint = hint
+  )
+
 }
 
 #' Add Text to slide candidate
@@ -62,9 +88,18 @@ add_subtitle <- function(robopptx, subtitle = NULL) {
 #' @param text character Text to add to the current slide candidate
 #'
 #' @return A `robopptx` object.
+#' @export
 #' @examples "todo"
-add_text <- function(robopptx, text = NULL) {
-  add(robopptx = robopptx, content = text, robo_class = "text")
+add_text <- function(robopptx, text = NULL, slide = NA_integer_,
+                     shapeid = NA_integer_, hint = NULL) {
+  add(
+    robopptx = robopptx,
+    content = text,
+    robo_class = "text",
+    slide = slide,
+    shapeid = shapeid,
+    hint = hint
+  )
 }
 
 #' Add Text to slide candidate
@@ -75,8 +110,16 @@ add_text <- function(robopptx, text = NULL) {
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_footer <- function(robopptx, footer = NULL) {
-  add(robopptx = robopptx, content = footer, robo_class = "footer")
+add_footer <- function(robopptx, footer = NULL, slide = NA_integer_,
+                       shapeid = NA_integer_, hint = NULL) {
+  add(
+    robopptx = robopptx,
+    content = footer,
+    robo_class = "footer",
+    slide = slide,
+    shapeid = shapeid,
+    hint = hint
+  )
 }
 
 #' Add Table to slide candidate
@@ -87,10 +130,18 @@ add_footer <- function(robopptx, footer = NULL) {
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_table <- function(robopptx, table = NULL) {
+add_table <- function(robopptx, table = NULL, slide = NA_integer_,
+                      shapeid = NA_integer_, hint = NULL) {
   table <- as.data.frame(table)
 
-  add(robopptx = robopptx, content = table, robo_class = "table")
+  add(
+    robopptx = robopptx,
+    content = table,
+    robo_class = "table",
+    slide = slide,
+    shapeid = shapeid,
+    hint = hint
+  )
 }
 
 #' Add Graph to slide candidate
@@ -101,18 +152,33 @@ add_table <- function(robopptx, table = NULL) {
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_graph <- function(robopptx, graph = NULL) {
+add_graph <- function(robopptx, graph = NULL, slide = NA_integer_,
+                      shapeid = NA_integer_, hint = NULL, ...) {
   # if image is given as path - check file and filetype
   if (class(graph)[1] == "character") {
     stopifnot(file.exists(graph))
     stopifnot(grepl("[.](img|png)$", graph))
 
-    add(robopptx, content = graph, robo_class = "graph", r_class = "external_img")
+    add(
+      robopptx = robopptx,
+      content = graph,
+      robo_class = "graph",
+      r_class = "external_img",
+      slide = slide,
+      shapeid = shapeid,
+      hint = hint
+    )
 
   } else {
-    add(robopptx, content = graph, robo_class = "graph")
+    add(
+      robopptx = robopptx,
+      content = graph,
+      robo_class = "graph",
+      slide = slide,
+      shapeid = shapeid,
+      hint = hint
+    )
   }
-
 }
 
 #' Add content to slide candidate
@@ -137,4 +203,16 @@ add_slide <- function(robopptx, ...) {
   robopptx$robocop$add_slide(args)
 
   invisible(robopptx)
+}
+
+#' Add content to slide candidate
+#'
+#' @param robopptx robopptx Imported layout file from \link{load_layout}
+#' @param ... object Content to add to the current slide candidate
+#'
+#' @return A `robopptx` object.
+#' @export
+#' @examples "todo"
+select_layout <- function(robopptx, ...) {
+
 }

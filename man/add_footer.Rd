@@ -4,7 +4,13 @@
 \alias{add_footer}
 \title{Add Text to slide candidate}
 \usage{
-add_footer(robopptx, footer = NULL)
+add_footer(
+  robopptx,
+  footer = NULL,
+  slide = NA_integer_,
+  shapeid = NA_integer_,
+  hint = NULL
+)
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}

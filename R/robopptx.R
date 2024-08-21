@@ -6,12 +6,12 @@
 #' @export
 #' @examples "todo"
 #' obj <- new_robopptx()
-new_robopptx <- function(path = NULL, clean = c("rename", "delete")[1],
+new_robopptx <- function(path = NULL, clean = "rename",
                          delete_slides = FALSE, position_precision = 0.5) {
   if (is.null(path)) {
     path <- system.file("extdata", "german_locale.pptx", package = "robocop")
   }
-
+  clean <-  match.arg(clean, c("rename", "delete"))
   ## load pptx file via officer
   obj <- officer::read_pptx(path = path)
   obj$filepath_layout <- path
@@ -57,7 +57,7 @@ robocop <-
     public = list(
       initialize = function(rpptx, position_precision = 0.5) {
         # stopifnot("rpptx" %in% class(rpptx))
-        stop_if_not_rpptx(x)
+        stop_if_not_rpptx(rpptx)
         ## add class mapping
         # currently supported plot classes
         graph_classes <- c("ggplot", "ms_chart")
@@ -289,7 +289,7 @@ robocop <-
         # .x <- 2
 
         if (length(self$slides)) {
-          map(
+          purrr::map(
             1:length(self$slides),
             ~ {
 
@@ -364,8 +364,8 @@ robocop <-
             ":="(
               add_order = 1:length(content_list),
               robo_class = names(content_list),
-              class_r = map_chr(content_list, ~class(.x)[length(class(.x))]),
-              content = setNames(content_list, NULL)
+              class_r = purrr::map_chr(content_list, ~class(.x)[length(class(.x))]),
+              content = stats::setNames(content_list, NULL)
             )
           ]
 

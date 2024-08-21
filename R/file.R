@@ -1,7 +1,7 @@
 #' Load PowerPoint to extract its layout
 #'
-#' @param filepath File path.
-#' @param ...
+#' @param filepath Path to PPTX file.
+#' @param ... Passed on to [new_robopptx].
 #'
 #' @return A `robopptx` object.
 #' @export
@@ -9,9 +9,7 @@
 load_layout <- function(path = NULL, ...) {
   stopifnot(!is.null(path))
   stopifnot(file.exists(path))
-
   robopptx <- new_robopptx(path = path, ...)
-
   return(robopptx)
 }
 

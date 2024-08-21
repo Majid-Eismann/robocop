@@ -7,9 +7,9 @@
 load_layout(path = NULL, ...)
 }
 \arguments{
-\item{...}{}
+\item{...}{Passed on to \link{new_robopptx}.}
 
-\item{filepath}{File path.}
+\item{filepath}{Path to PPTX file.}
 }
 \value{
 A \code{robopptx} object.

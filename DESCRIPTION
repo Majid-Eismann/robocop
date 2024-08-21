@@ -1,6 +1,6 @@
 Package: robocop
 Title: Easily populate PowerPoint presentation using its layouts
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: c(
     person(given = "Majid", family = "Eismann", email = "yourself@somewhere.net", 
            role = c("aut", "cre")),
@@ -18,9 +18,11 @@ Imports:
   xml2,
   R6,
   purrr,
-  cli
+  cli,
+  stats
 Suggests: 
-  styler,
-  testthat,
-  ggplot2,
-  mschart
+    styler,
+    testthat (>= 3.0.0),
+    ggplot2,
+    mschart
+Config/testthat/edition: 3

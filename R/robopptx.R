@@ -1,3 +1,6 @@
+### robopptx  -----
+
+
 #' @title Import and prepare PowerPoint file for robocop
 #'
 #' @description
@@ -34,6 +37,26 @@ new_robopptx <- function(path = NULL, clean = "rename",
 
   return(obj)
 }
+
+
+#' @export
+#' @keywords internal
+print.robopptx <- function(x, ...) {
+  cli::cli_h2("robopptx")
+  df_layouts <- officer::layout_summary(x)
+  masters <- df_layouts$master |> unique()
+  layouts <- df_layouts$layout |> unique()
+  n_layouts <- df_layouts |> nrow()
+  n_slides <- x$slide$length()
+  bullets <- c(
+    "masters: {.val {length(masters)}} [{.val {masters}}]",
+    "layouts: {.val {n_layouts}} [{.val {layouts}}]",
+    "slides: {.val {n_slides}}"
+  )
+  names(bullets) <- rep("*", length(bullets))
+  cli::cli_bullets(bullets)
+}
+
 
 
 ### robocop R6 class -----

@@ -375,6 +375,9 @@ robocop <-
           warning("Empty list passed to add_slide method from easy_pptx")
         }
       },
+
+      #' @description TODO
+      #'  TODO
       explain = function() {
 
       }

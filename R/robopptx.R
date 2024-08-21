@@ -56,8 +56,8 @@ robocop <-
     #'   TODO
     public = list(
       initialize = function(rpptx, position_precision = 0.5) {
-        stopifnot("rpptx" %in% class(rpptx))
-
+        # stopifnot("rpptx" %in% class(rpptx))
+        stop_if_not_rpptx(x)
         ## add class mapping
         # currently supported plot classes
         graph_classes <- c("ggplot", "ms_chart")

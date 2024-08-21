@@ -25,7 +25,8 @@ load_layout <- function(path = NULL, ...) {
 #'
 #' @examples "todo"
 export <- function(robopptx, to = NULL) {
-  stopifnot("robopptx" %in% class(robopptx))
+  # stopifnot("robopptx" %in% class(robopptx))
+  stop_if_not_robopptx(robopptx)
 
   if (length(robopptx$robocop$slides)) {
     for (slide in join_slides(robopptx)) {

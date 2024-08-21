@@ -17,9 +17,10 @@ Imports:
   officer,
   xml2,
   R6,
-  purrr
+  purrr,
+  cli
 Suggests: 
   styler,
   testthat,
   ggplot2,
-  mscharts
+  mschart

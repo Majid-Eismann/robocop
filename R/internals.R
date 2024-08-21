@@ -43,7 +43,8 @@ group_r_class <- function(x) {
 #' @export
 #' @examples "todo"
 flush <- function(robopptx) {
-  stopifnot("robopptx" %in% class(robopptx))
+  # stopifnot("robopptx" %in% class(robopptx))
+  stop_if_not_robopptx(robopptx)
 
   # flush candidate
   robopptx$robocop$flush_candidate()
@@ -59,8 +60,8 @@ flush <- function(robopptx) {
 #' @export
 #' @examples "todo"
 join_slides <- function(robopptx) {
-  stopifnot("robopptx" %in% class(robopptx))
-
+  # stopifnot("robopptx" %in% class(robopptx))
+  stop_if_not_robopptx(robopptx)
   robopptx$robocop$join_slides()
 }
 

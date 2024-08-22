@@ -400,7 +400,7 @@ robocop <-
           purrr::map(
             1:length(self$slides),
             ~ {
-              # map slide and layout by robo_class and class_r by layout slide_id
+              # map slide and layout by robo_content and class_r by layout slide_id
               self$layout_overview[
                 placeholder_n >= self$slides[[.x]][, .N],
                 list(id, layout_class, placeholder_n, placement_order, default_slide_perclass, class_count = order(placement_order)),

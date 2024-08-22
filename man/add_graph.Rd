@@ -2,12 +2,12 @@
 % Please edit documentation in R/add.R
 \name{add_graph}
 \alias{add_graph}
-\title{Add Graph to slide candidate}
+\title{Add Graph to layout candidate}
 \usage{
 add_graph(
   robopptx,
   graph = NULL,
-  slide = NA_integer_,
+  layout = NA_integer_,
   shapeid = NA_integer_,
   hint = NULL,
   ...
@@ -16,13 +16,13 @@ add_graph(
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}
 
-\item{graph}{ggplot, mschart, charater Graph to add to the current slide candidate as ggplot, mschart or filepath to existing .img or .png file}
+\item{graph}{ggplot, mschart, charater Graph to add to the current layout candidate as ggplot, mschart or filepath to existing .img or .png file}
 }
 \value{
 A \code{robopptx} object.
 }
 \description{
-Add Graph to slide candidate
+Add Graph to layout candidate
 }
 \examples{
 "todo"

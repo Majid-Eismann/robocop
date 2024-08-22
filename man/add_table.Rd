@@ -2,12 +2,12 @@
 % Please edit documentation in R/add.R
 \name{add_table}
 \alias{add_table}
-\title{Add Table to slide candidate}
+\title{Add Table to layout candidate}
 \usage{
 add_table(
   robopptx,
   table = NULL,
-  slide = NA_integer_,
+  layout = NA_integer_,
   shapeid = NA_integer_,
   hint = NULL
 )
@@ -15,13 +15,13 @@ add_table(
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}
 
-\item{table}{data.frame Table to add to the current slide candidate}
+\item{table}{data.frame Table to add to the current layout candidate}
 }
 \value{
 A \code{robopptx} object.
 }
 \description{
-Add Table to slide candidate
+Add Table to layout candidate
 }
 \examples{
 "todo"

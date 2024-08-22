@@ -2,12 +2,12 @@
 % Please edit documentation in R/add.R
 \name{add_footer}
 \alias{add_footer}
-\title{Add Text to slide candidate}
+\title{Add Text to layout candidate}
 \usage{
 add_footer(
   robopptx,
   footer = NULL,
-  slide = NA_integer_,
+  layout = NA_integer_,
   shapeid = NA_integer_,
   hint = NULL
 )
@@ -15,13 +15,13 @@ add_footer(
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}
 
-\item{footer}{character Footer to add to the current slide candidate}
+\item{footer}{character Footer to add to the current layout candidate}
 }
 \value{
 A \code{robopptx} object.
 }
 \description{
-Add Text to slide candidate
+Add Text to layout candidate
 }
 \examples{
 "todo"

@@ -23,7 +23,7 @@ group_r_class <- function(x) {
       data.frame = "table",
       data.table = "table",
       tbl_df = "table",
-      tbl= "table",
+      tbl = "table",
       NA_character_
     ) |>
     unique() |>

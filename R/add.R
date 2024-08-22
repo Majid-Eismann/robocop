@@ -71,7 +71,6 @@ add_title <- function(robopptx, title = NULL, slide = NA_integer_,
 #' @examples "todo"
 add_subtitle <- function(robopptx, subtitle = NULL, slide = NA_integer_,
                          shapeid = NA_integer_, hint = NULL) {
-
   add(
     robopptx = robopptx,
     content = subtitle,
@@ -80,7 +79,6 @@ add_subtitle <- function(robopptx, subtitle = NULL, slide = NA_integer_,
     shapeid = shapeid,
     hint = hint
   )
-
 }
 
 #' Add Text to slide candidate
@@ -169,7 +167,6 @@ add_graph <- function(robopptx, graph = NULL, slide = NA_integer_,
       shapeid = shapeid,
       hint = hint
     )
-
   } else {
     add(
       robopptx = robopptx,

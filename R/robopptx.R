@@ -14,7 +14,7 @@ new_robopptx <- function(path = NULL, clean = "rename",
   if (is.null(path)) {
     path <- system.file("extdata", "german_locale.pptx", package = "robocop")
   }
-  clean <-  match.arg(clean, c("rename", "delete"))
+  clean <- match.arg(clean, c("rename", "delete"))
   ## load pptx file via officer
   obj <- officer::read_pptx(path = path)
   obj$filepath_layout <- path
@@ -118,7 +118,8 @@ robocop <-
               robo_class == "graph",
             ][
               rep(1:.N, length(graph_classes)),
-            ][,
+            ][
+              ,
               class_r := rep(graph_classes, each = .N / length(graph_classes))
             ]
           )
@@ -173,7 +174,7 @@ robocop <-
 
         # mark slides with duplicated powerpoint classes
         self$layout_overview[,
-          multi_type := uniqueN(id)>1,
+          multi_type := uniqueN(id) > 1,
           by = c("slide_id", "type")
         ]
 
@@ -209,8 +210,7 @@ robocop <-
               substr(h_align, 1, 1),
               substr(v_align, 1, 1),
               substr(robo_class, 1, 3)
-            )
-            ] |>
+            )] |>
               paste0(collapse = "")
           },
           by = "slide_id"
@@ -241,12 +241,12 @@ robocop <-
         # save emtpy slide with max number of placeholders
         self$slide_empty <-
           data.table(
-            add_order    = NA_integer_,
-            robo_class   = NA_character_,
-            class_r      = NA_character_,
-            content      = list(list()),
-            dotdotdot    = list(list()),
-            hint         = list(list()),
+            add_order = NA_integer_,
+            robo_class = NA_character_,
+            class_r = NA_character_,
+            content = list(list()),
+            dotdotdot = list(list()),
+            hint = list(list()),
             user_selection_slide = NA_integer_,
             user_selection_shapeid = NA_integer_
           )[rep(1, self$layout_overview[, max(placeholder_n)])]
@@ -307,7 +307,6 @@ robocop <-
 
       #' @description TODO
       join_slides = function() {
-
         # self <- my_layout$robocop
         # .x <- 2
 
@@ -315,7 +314,6 @@ robocop <-
           purrr::map(
             1:length(self$slides),
             ~ {
-
               # map slide and layout by robo_class and class_r by layout slide_id
               self$layout_overview[
                 placeholder_n >= self$slides[[.x]][, .N],
@@ -344,7 +342,8 @@ robocop <-
                     all.x = T
                   )
 
-                layout_selection[,
+                layout_selection[
+                  ,
                   slide_filter := slide_filter.x | slide_filter.y
                 ]
                 layout_selection[, ":="(slide_filter.x = NULL, slide_filter.y = NULL)]
@@ -376,7 +375,6 @@ robocop <-
       #' @param content_list (`list`)\cr
       #'  TODO
       add_slide = function(content_list = list()) {
-
         if (length(unlist(content_list))) {
           # laod empty slide
           tmp <- copy(self$slide_empty)
@@ -387,7 +385,7 @@ robocop <-
             ":="(
               add_order = 1:length(content_list),
               robo_class = names(content_list),
-              class_r = purrr::map_chr(content_list, ~class(.x)[length(class(.x))]),
+              class_r = purrr::map_chr(content_list, ~ class(.x)[length(class(.x))]),
               content = stats::setNames(content_list, NULL)
             )
           ]

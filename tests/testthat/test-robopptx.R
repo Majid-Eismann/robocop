@@ -1,12 +1,10 @@
 library(robocop)
 
 test_that("basic functions throw no error", {
-
   # MH:
   # - this integration test should probably me much more modular
   skip(message = "Skipping for now, as test currently fails")
   expect_no_error({
-
     my_layout <- load_layout(system.file("extdata", "german_locale.pptx", package = "robocop"))
 
     # Add content by calling add_ functions to slide candidate
@@ -86,6 +84,5 @@ test_that("basic functions throw no error", {
     )
     file <- tempfile(fileext = ".pptx")
     export(my_layout, file)
-
   })
 })

@@ -38,15 +38,12 @@ export <- function(robopptx, to = NULL) {
             robopptx,
             value = {
               if (slide[element, robo_class == "graph" & class_r == "external_img"]) {
-
                 external_img(slide[element, content][[1]][[1]])
-
-              } else if  (slide[element, robo_class %in% c("graph", "table")]) {
-
+              } else if (slide[element, robo_class %in% c("graph", "table")]) {
                 slide[element, content][[1]]
-
-              } else slide[element, content][[1]][[1]]
-
+              } else {
+                slide[element, content][[1]][[1]]
+              }
             },
             location = officer::ph_location_label(
               type = slide[element, type],
@@ -57,7 +54,7 @@ export <- function(robopptx, to = NULL) {
     }
 
     if (is.null(to)) {
-      to <- gsub("[.]pptx", "_easypptx.pptx",robopptx$filepath_layout)
+      to <- gsub("[.]pptx", "_easypptx.pptx", robopptx$filepath_layout)
     }
 
     print(robopptx, target = to)

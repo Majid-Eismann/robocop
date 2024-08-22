@@ -2,29 +2,29 @@
 % Please edit documentation in R/add.R
 \name{add}
 \alias{add}
-\title{Add content to slide candidate}
+\title{Add content to layout candidate}
 \usage{
 add(
   robopptx,
   content = NULL,
-  slide = NA_integer_,
+  layout = NA_integer_,
   shapeid = NA_integer_,
   hint = NULL,
   ...,
-  robo_class = NA_character_,
+  robo_content = NA_character_,
   r_class = NA_character_
 )
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}
 
-\item{content}{object Content to add to the current slide candidate}
+\item{content}{object Content to add to the current layout candidate}
 }
 \value{
 A \code{robopptx} object.
 }
 \description{
-Add content to slide candidate
+Add content to layout candidate
 }
 \examples{
 "todo"

@@ -1,3 +1,6 @@
+### robopptx  -----
+
+
 #' @title Import and prepare PowerPoint file for robocop
 #'
 #' @description
@@ -6,12 +9,12 @@
 #' @export
 #' @examples "todo"
 #' obj <- new_robopptx()
-new_robopptx <- function(path = NULL, clean = c("rename", "delete")[1],
+new_robopptx <- function(path = NULL, clean = "rename",
                          delete_slides = FALSE, position_precision = 0.5) {
   if (is.null(path)) {
     path <- system.file("extdata", "german_locale.pptx", package = "robocop")
   }
-
+  clean <-  match.arg(clean, c("rename", "delete"))
   ## load pptx file via officer
   obj <- officer::read_pptx(path = path)
   obj$filepath_layout <- path
@@ -285,6 +288,26 @@ get_emptyslide_table <- function(number_of_rows = 1) {
 
 }
 
+#' @export
+#' @keywords internal
+print.robopptx <- function(x, ...) {
+  cli::cli_h2("robopptx")
+  df_layouts <- officer::layout_summary(x)
+  masters <- df_layouts$master |> unique()
+  layouts <- df_layouts$layout |> unique()
+  n_layouts <- df_layouts |> nrow()
+  n_slides <- x$slide$length()
+  bullets <- c(
+    "masters: {.val {length(masters)}} [{.val {masters}}]",
+    "layouts: {.val {n_layouts}} [{.val {layouts}}]",
+    "slides: {.val {n_slides}}"
+  )
+  names(bullets) <- rep("*", length(bullets))
+  cli::cli_bullets(bullets)
+}
+
+
+
 ### robocop R6 class -----
 
 #' R6 Class to manage instructions for populating PowerPoint presentation
@@ -305,7 +328,8 @@ robocop <-
     #'   TODO
     public = list(
       initialize = function(rpptx, position_precision = 0.5) {
-        stopifnot("rpptx" %in% class(rpptx))
+
+        stop_if_not_rpptx(rpptx)
 
         # get mapping table: map PowerPoint types, robocop content and r classes
         self$class_mapping <- get_mapping_table()
@@ -374,7 +398,7 @@ robocop <-
         # .x <- 2
 
         if (length(self$slides)) {
-          map(
+          purrr::map(
             1:length(self$slides),
             ~ {
 
@@ -450,7 +474,7 @@ robocop <-
               add_order = 1:length(content_list),
               robo_content = names(content_list),
               class_r = purrr::map_chr(content_list, ~class(.x)[length(class(.x))]),
-              content = setNames(content_list, NULL)
+              content = stats::setNames(content_list, NULL)
             )
           ]
 
@@ -460,6 +484,9 @@ robocop <-
           warning("Empty list passed to add_slide method from easy_pptx")
         }
       },
+
+      #' @description TODO
+      #'  TODO
       explain = function() {
 
       }

@@ -147,6 +147,8 @@ TODO}
 \if{html}{\out{<a id="method-robocop-explain"></a>}}
 \if{latex}{\out{\hypertarget{method-robocop-explain}{}}}
 \subsection{Method \code{explain()}}{
+TODO
+TODO
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$explain()}\if{html}{\out{</div>}}
 }

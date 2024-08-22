@@ -6,7 +6,7 @@
 \usage{
 new_robopptx(
   path = NULL,
-  clean = c("rename", "delete")[1],
+  clean = "rename",
   delete_slides = FALSE,
   position_precision = 0.5
 )

@@ -9,7 +9,7 @@
 #' @examples "todo"
 add <- function(robopptx, content = NULL, layout = NA_integer_, shapeid = NA_integer_,
                 hint = NULL, ..., robo_content = NA_character_, r_class = NA_character_) {
-  stopifnot("robopptx" %in% class(my_layout))
+  stop_if_not_robopptx(my_layout)
 
   dots <- list(...)
 
@@ -190,7 +190,9 @@ add_graph <- function(robopptx, graph = NULL, layout = NA_integer_,
 #' @export
 #' @examples "todo"
 add_slide <- function(robopptx, ...) {
-  stopifnot("robopptx" %in% class(robopptx))
+  # stopifnot("robopptx" %in% class(robopptx))
+  stop_if_not_robopptx(my_layout)
+
 
   args <- list(...)
 

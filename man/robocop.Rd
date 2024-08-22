@@ -9,9 +9,6 @@ Load layout file, add slides with corresponding contents and export presentation
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{layout_pptx}}{(\code{TODO})\cr
-TODO}
-
 \item{\code{layout_overview}}{(\code{data.frame})\cr
 TODO}
 

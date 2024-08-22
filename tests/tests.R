@@ -18,7 +18,7 @@ my_layout <- load_layout(system.file("extdata", "german_locale.pptx", package = 
 
 # Add content by calling add_ functions to slide candidate
 add_title(my_layout, "Hello robocop!")
-add_subtitle(my_layout, "slide with add functions")
+add_subtitle(my_layout, "slide with adxd functions")
 
 ## flush / materialize slide candidate
 flush(my_layout)

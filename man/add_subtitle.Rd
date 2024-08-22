@@ -2,12 +2,12 @@
 % Please edit documentation in R/add.R
 \name{add_subtitle}
 \alias{add_subtitle}
-\title{Add subtitle to slide candidate}
+\title{Add subtitle to layout candidate}
 \usage{
 add_subtitle(
   robopptx,
   subtitle = NULL,
-  slide = NA_integer_,
+  layout = NA_integer_,
   shapeid = NA_integer_,
   hint = NULL
 )
@@ -15,13 +15,13 @@ add_subtitle(
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}
 
-\item{sub_title}{character Subtitle to add to the current slide candidate}
+\item{sub_title}{character Subtitle to add to the current layout candidate}
 }
 \value{
 A \code{robopptx} object.
 }
 \description{
-Add subtitle to slide candidate
+Add subtitle to layout candidate
 }
 \examples{
 "todo"

@@ -2,13 +2,15 @@
 #'
 #' @param x object
 #'
-#' @return character name of grouped class
+#' @return character robocop content name
 #' @keywords internal
+#' @import purrr
 #' @export
 #' @examples "todo"
-group_r_class <- function(x) {
+rclass_to_robo_content <- function(x) {
+
   result <-
-    map_chr(
+    purrr::map_chr(
       class(x),
       switch,
       character = "text",

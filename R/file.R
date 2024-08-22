@@ -38,11 +38,11 @@ export <- function(robopptx, to = NULL) {
           officer::ph_with(
             robopptx,
             value = {
-              if (slide[element, robo_class == "graph" & class_r == "external_img"]) {
+              if (slide[element, robo_content == "graph" & class_r == "external_img"]) {
 
                 external_img(slide[element, content][[1]][[1]])
 
-              } else if  (slide[element, robo_class %in% c("graph", "table")]) {
+              } else if  (slide[element, robo_content %in% c("graph", "table")]) {
 
                 slide[element, content][[1]]
 

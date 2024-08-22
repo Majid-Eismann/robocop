@@ -2,12 +2,12 @@
 % Please edit documentation in R/add.R
 \name{add_title}
 \alias{add_title}
-\title{Add title to slide candidate}
+\title{Add title to layout candidate}
 \usage{
 add_title(
   robopptx,
   title = NULL,
-  slide = NA_integer_,
+  layout = NA_integer_,
   shapeid = NA_integer_,
   hint = NULL
 )
@@ -15,13 +15,13 @@ add_title(
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}
 
-\item{title}{character Title to add to the current slide candidate}
+\item{title}{character Title to add to the current layout candidate}
 }
 \value{
 A \code{robopptx} object.
 }
 \description{
-Add title to slide candidate
+Add title to layout candidate
 }
 \examples{
 "todo"

@@ -2,20 +2,20 @@
 % Please edit documentation in R/add.R
 \name{add_slide}
 \alias{add_slide}
-\title{Add content to slide candidate}
+\title{Add content to layout candidate}
 \usage{
 add_slide(robopptx, ...)
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}
 
-\item{...}{object Content to add to the current slide candidate}
+\item{...}{object Content to add to the current layout candidate}
 }
 \value{
 A \code{robopptx} object.
 }
 \description{
-Add content to slide candidate
+Add content to layout candidate
 }
 \examples{
 "todo"

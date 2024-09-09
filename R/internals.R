@@ -37,24 +37,24 @@ rclass_to_robo_content <- function(x) {
   return(result)
 }
 
-#' Flush / materialize current slide candidate into a slide
+#' Materialise current slide candidate into a slide
 #'
 #' @param robopptx robopptx Imported layout file from [load_layout]
 #'
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-flush <- function(robopptx) {
+materialise <- function(robopptx) {
   # stopifnot("robopptx" %in% class(robopptx))
   stop_if_not_robopptx(robopptx)
 
-  # flush candidate
-  robopptx$robocop$flush_candidate()
+  # materialise candidate
+  robopptx$robocop$materialise_candidate()
 
   invisible(robopptx)
 }
 
-#' Flush / materialize current slide candidate into a slide
+#' Join all slide candidates into a presentation
 #'
 #' @param robopptx robopptx Imported layout file from [load_layout]
 #'
@@ -119,6 +119,6 @@ setGeneric("slide<-", function(x, value) standardGeneric("slide<-"))
 
 #' @export
 setMethod("slide<-", "robopptx", function(x) {
-  flush(x)
+  materialise(x)
   x
 })

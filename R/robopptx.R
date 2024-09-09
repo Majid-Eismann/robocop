@@ -383,7 +383,7 @@ robocop <-
       slides = list(),
 
       #' @description TODO
-      flush_candidate = function() {
+      materialise_candidate = function() {
         # add slide to slidedeck
         self[["slides"]][[length(self$slides) + 1]] <- self$slide_candidate[!is.na(add_order)]
 
@@ -453,7 +453,7 @@ robocop <-
             }
           )
         } else {
-          warnings("No slides to join. Forgot to add content and/or flush slide(s)?")
+          warnings("No slides to join. Forgot to add content and/or materialise slide(s)?")
         }
       },
 

@@ -33,7 +33,7 @@ TODO}
 \item \href{#method-robocop-show_layout}{\code{robocop$show_layout()}}
 \item \href{#method-robocop-show_slide}{\code{robocop$show_slide()}}
 \item \href{#method-robocop-show_slide_candidate}{\code{robocop$show_slide_candidate()}}
-\item \href{#method-robocop-flush_candidate}{\code{robocop$flush_candidate()}}
+\item \href{#method-robocop-materialise_candidate}{\code{robocop$materialise_candidate()}}
 \item \href{#method-robocop-join_slides}{\code{robocop$join_slides()}}
 \item \href{#method-robocop-add_slide}{\code{robocop$add_slide()}}
 \item \href{#method-robocop-explain}{\code{robocop$explain()}}
@@ -106,12 +106,12 @@ TODO
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-robocop-flush_candidate"></a>}}
-\if{latex}{\out{\hypertarget{method-robocop-flush_candidate}{}}}
-\subsection{Method \code{flush_candidate()}}{
+\if{html}{\out{<a id="method-robocop-materialise_candidate"></a>}}
+\if{latex}{\out{\hypertarget{method-robocop-materialise_candidate}{}}}
+\subsection{Method \code{materialise_candidate()}}{
 TODO
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{robocop$flush_candidate()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{robocop$materialise_candidate()}\if{html}{\out{</div>}}
 }
 
 }

@@ -20,14 +20,14 @@ my_layout <- load_layout(system.file("extdata", "german_locale.pptx", package = 
 add_title(my_layout, "Hello robocop!")
 add_subtitle(my_layout, "slide with adxd functions")
 
-## flush / materialize slide candidate
-flush(my_layout)
+## materialise / materialize slide candidate
+materialise(my_layout)
 
 # Add content by calling add() to slide candidate and let robocop guess its content
 add(my_layout, "Hello robocop!")
 add(my_layout, "slide with add() function")
 
-flush(my_layout)
+materialise(my_layout)
 
 slide(my_layout) <-
   my_layout |>
@@ -35,14 +35,14 @@ slide(my_layout) <-
   add("slide with adding via piping") |>
   add("robocop likes piping")
 
-# # Add content by using magrittr piping and implicitly flushing by assignment
+# # Add content by using magrittr piping and implicitly materialiseing by assignment
 # require(magrittr)
 # slide(my_layout) %<>%
 # add("Hello robocop!") %>%
 # add("slide with addding via magrittr piping") %>%
 # add("robocop likes magrittr")
 
-# Add content by using `+` and implicitly flushing by assignment
+# Add content by using `+` and implicitly materialiseing by assignment
 slide(my_layout) <-
   my_layout +
   "Hello robocop!" +

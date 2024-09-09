@@ -20,7 +20,7 @@ Most data professionals prefer to avoid using PowerPoint presentations due to th
 
 ## How to use
 
-After loading a layout via load_layout() function you can easily add content to what is called slide candidate. After adding content to a slide candidate, you can flush or materialize the candidate into a slide. As you have added several slides to the easy_pptx class, you can export the slide set to a presentation file. 
+After loading a layout via load_layout() function you can easily add content to what is called slide candidate. After adding content to a slide candidate, you can materialise or materialize the candidate into a slide. As you have added several slides to the easy_pptx class, you can export the slide set to a presentation file. 
 
 ### Import PowerPoint to extract layouts
 
@@ -36,7 +36,7 @@ my_layout_delete <- load_layout(system.file("extdata", "german_locale.pptx", pac
 
 ### Add content to a slide candidate
 
-A slide candidate is a basket / memory for added content until its flushed/materialized. You can conveniently add content step by step, precisely or by letting RoboCop guess or plug in multiple candidates by using lists, json etc. 
+A slide candidate is a basket / memory for added content until its materialiseed/materialized. You can conveniently add content step by step, precisely or by letting RoboCop guess or plug in multiple candidates by using lists, json etc. 
 
 ```r
 # Add content by calling add_ functions to slide candidate
@@ -44,15 +44,15 @@ add_title(my_layout, "Hello RoboCop!")
 add_subtitle(my_layout, "slide with add functions")
 add_text(my_layout, "RoboCop goes step by step...")
 
-## flush / materialize slide candidate
-flush(my_layout)
+## materialise slide candidate
+materialise(my_layout)
 
 # Add content by calling add() to slide candidate and let RoboCop guess its content
 add(my_layout, "Hello RoboCop!")
 add(my_layout, "slide with add() function")
 add(my_layout, "RoboCop guessed")
 
-flush(my_layout)
+materialise(my_layout)
 
 slide(my_layout) <-
   my_layout |>
@@ -60,14 +60,14 @@ slide(my_layout) <-
   add("slide with adding via piping") |>
   add("RoboCop likes piping")
 
-# # Add content by using magrittr piping and implicitly flushing by assignment
+# # Add content by using magrittr piping and implicitly materialiseing by assignment
 # require(magrittr)
 # slide(my_layout) %<>%
 # add("Hello RoboCop!") %>%
 # add("slide with addding via magrittr piping") %>%
 # add("RoboCop likes magrittr")
 
-# Add content by using `+` and implicitly flushing by assignment
+# Add content by using `+` and implicitly materialiseing by assignment
 slide(my_layout) <-
   my_layout +
   "Hello RoboCop!" +

@@ -29,5 +29,5 @@ library(robocop)
 # Attaching package: 'robocop'
 # The following object is masked from 'package:base':
 # 
-#     flush
+#     materialise
 ```

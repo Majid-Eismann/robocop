@@ -11,14 +11,14 @@ test_that("basic functions throw no error", {
     add_title(my_layout, "Hello robocop!")
     add_subtitle(my_layout, "slide with add functions")
 
-    ## flush / materialize slide candidate
-    flush(my_layout)
+    ## materialise slide candidate
+    materialise(my_layout)
 
     # Add content by calling add() to slide candidate and let robocop guess its content
     add(my_layout, "Hello robocop!")
     add(my_layout, "slide with add() function")
 
-    flush(my_layout)
+    materialise(my_layout)
 
     slide(my_layout) <-
       my_layout |>
@@ -27,14 +27,14 @@ test_that("basic functions throw no error", {
       add("robocop likes piping")
 
 
-    # # Add content by using magrittr piping and implicitly flushing by assignment
+    # # Add content by using magrittr piping and implicitly materialiseing by assignment
     # require(magrittr)
     # slide(my_layout) %<>%
     # add("Hello robocop!") %>%
     # add("slide with addding via magrittr piping") %>%
     # add("robocop likes magrittr")
 
-    # Add content by using `+` and implicitly flushing by assignment
+    # Add content by using `+` and implicitly materialiseing by assignment
     slide(my_layout) <-
       my_layout +
       "Hello robocop!" +

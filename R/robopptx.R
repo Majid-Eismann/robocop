@@ -47,32 +47,31 @@ new_robopptx <- function(path = NULL, clean = "rename",
 #' @export
 #' @examples "todo"
 get_mapping_table <- function(supported_graph_classes = c("ggplot", "ms_chart")) {
-
   # hard coded mapping table
   mapping_table <-
-  list(
-    # PowerPoint classes
-    class_pptx = c(
-      "body", "body", "body",
-      "ctrTitle", "subTitle",
-      "ftr", "sldNum", "title",
-      "pic", "media", "dt"
-    ),
-    # robocop content
-    robo_content = c(
-      "text", "table", "graph",
-      "title", "subtitle",
-      "footer", "slidenumber", "title",
-      "graph", "graph", "date"
-    ),
-    # R classes for mapping
-    class_r = c(
-      "character", "data.frame", "external_img",
-      "character", "character",
-      "character", "numeric", "character",
-      "external_img", "external_img", "date"
-    )
-  ) |>
+    list(
+      # PowerPoint classes
+      class_pptx = c(
+        "body", "body", "body",
+        "ctrTitle", "subTitle",
+        "ftr", "sldNum", "title",
+        "pic", "media", "dt"
+      ),
+      # robocop content
+      robo_content = c(
+        "text", "table", "graph",
+        "title", "subtitle",
+        "footer", "slidenumber", "title",
+        "graph", "graph", "date"
+      ),
+      # R classes for mapping
+      class_r = c(
+        "character", "data.frame", "external_img",
+        "character", "character",
+        "character", "numeric", "character",
+        "external_img", "external_img", "date"
+      )
+    ) |>
     as.data.table()
 
   # recycle robocop content for certain r classes
@@ -82,11 +81,11 @@ get_mapping_table <- function(supported_graph_classes = c("ggplot", "ms_chart"))
       robo_content == "graph",
     ][
       rep(1:.N, length(supported_graph_classes)),
-    ][,
+    ][
+      ,
       class_r := rep(supported_graph_classes, each = .N / length(supported_graph_classes))
     ]
   )
-
 }
 
 #' Add alignment to layout table
@@ -98,33 +97,31 @@ get_mapping_table <- function(supported_graph_classes = c("ggplot", "ms_chart"))
 #' @examples
 #' "todo"
 add_alignment_layout_table <- function(layout_table, position_precision = 0.5) {
-
-  #todo: footer v_align
+  # todo: footer v_align
 
   # divide slide into bottom/top and left/center/right
   layout_table[,
-               ":="(
-                 v_align = ifelse(
-                   offy >= max(offy) - position_precision,
-                   "bottom",
-                   "top"
-                 ),
-                 h_align = ifelse(
-                   # center element
-                   cx - offx > layoutslide_width * 0.75,
-                   "center",
-                   ifelse(
-                     # width on the right side is bigger then width on the left side
-                     offx + cx - (layoutslide_width / 2) - position_precision >
-                       (layoutslide_width / 2) - position_precision - offx,
-                     "right",
-                     "left"
-                   )
-                 )
-               ),
-               by = "layout_id"
+    ":="(
+      v_align = ifelse(
+        offy >= max(offy) - position_precision,
+        "bottom",
+        "top"
+      ),
+      h_align = ifelse(
+        # center element
+        cx - offx > layoutslide_width * 0.75,
+        "center",
+        ifelse(
+          # width on the right side is bigger then width on the left side
+          offx + cx - (layoutslide_width / 2) - position_precision >
+            (layoutslide_width / 2) - position_precision - offx,
+          "right",
+          "left"
+        )
+      )
+    ),
+    by = "layout_id"
   ]
-
 }
 
 #' Add Layout Combination of Contents to layout Table
@@ -136,22 +133,19 @@ add_alignment_layout_table <- function(layout_table, position_precision = 0.5) {
 #' @examples
 #' "todo"
 add_layoutcombination_layout_table <- function(layout_table) {
-
   # Make unique class per slide by combining its layout placeholder classes
   #  and its orientation
   layout_table[,
-   layout_class := {
-     unique(.SD, by = "id")[, paste0(
-       substr(h_align, 1, 1),
-       substr(v_align, 1, 1),
-       substr(robo_content, 1, 3)
-     )
-     ] |>
-       paste0(collapse = "")
-   },
-   by = "layout_id"
+    layout_class := {
+      unique(.SD, by = "id")[, paste0(
+        substr(h_align, 1, 1),
+        substr(v_align, 1, 1),
+        substr(robo_content, 1, 3)
+      )] |>
+        paste0(collapse = "")
+    },
+    by = "layout_id"
   ]
-
 }
 
 
@@ -164,25 +158,23 @@ add_layoutcombination_layout_table <- function(layout_table) {
 #' @examples
 #' add_placementorder_layout_table(get_layout_table())
 add_placementorder_layout_table <- function(layout_table) {
-
   # slide order
   layout_table[,
     placement_order := match(
-       id,
-       .SD[
-         order(
-           factor(v_align, levels = c("top", "bottom")),
-           factor(h_align, levels = c("left", "center", "right")),
-           offy,
-           offx,
-           na.last = TRUE
-         ),
-         id
-       ]
-     ),
-     by = c("layout_id")
+      id,
+      .SD[
+        order(
+          factor(v_align, levels = c("top", "bottom")),
+          factor(h_align, levels = c("left", "center", "right")),
+          offy,
+          offx,
+          na.last = TRUE
+        ),
+        id
+      ]
+    ),
+    by = c("layout_id")
   ]
-
 }
 
 #' Add necessary variables for robocop to layer table
@@ -194,7 +186,6 @@ add_placementorder_layout_table <- function(layout_table) {
 #' @examples
 #' add_robocop_variables(get_layout_table())
 add_robocop_variables <- function(layout_table, position_precision = 0.5) {
-
   # expand layout PowerPoint types by every robocop content and r-class
   layout_table <-
     merge(
@@ -221,7 +212,6 @@ add_robocop_variables <- function(layout_table, position_precision = 0.5) {
 
   # add order of placements
   add_placementorder_layout_table(layout_table)
-
 }
 
 #' Get mapping table for PowerPoint types, robocop content and r classes
@@ -233,19 +223,19 @@ add_robocop_variables <- function(layout_table, position_precision = 0.5) {
 #' @export
 #' @examples "todo"
 get_layout_table <- function(rpptx, position_precision = 0.5) {
-
   # get all layout placeholders from officer
   layout_table <-
-  rpptx$slideLayouts$get_xfrm_data() |>
-  merge(
-    rpptx$slideLayouts$get_metadata() |>
-    subset(select = -c(master_file)),
-    by =c("name", "master_name")
-  ) |>
-  data.table()
+    rpptx$slideLayouts$get_xfrm_data() |>
+    merge(
+      rpptx$slideLayouts$get_metadata() |>
+        subset(select = -c(master_file)),
+      by = c("name", "master_name")
+    ) |>
+    data.table()
 
   # add layout_id from numeration of layout files
-  layout_table[,
+  layout_table[
+    ,
     layout_id := as.numeric(stringr::str_extract(filename, "\\d+"))
   ]
 
@@ -255,14 +245,14 @@ get_layout_table <- function(rpptx, position_precision = 0.5) {
 
   # add slide size to every layout placeholder
   slide_size <- officer::slide_size(rpptx)
-  layout_table[,
+  layout_table[
+    ,
     paste0("layoutslide_", names(slide_size)) := slide_size
   ]
 
   # add additional variables needed by robocop to layout
   layout_table <-
-  add_robocop_variables(layout_table, position_precision = position_precision)
-
+    add_robocop_variables(layout_table, position_precision = position_precision)
 }
 
 #' Get mapping table for PowerPoint types, robocop content and r classes
@@ -274,18 +264,16 @@ get_layout_table <- function(rpptx, position_precision = 0.5) {
 #' @export
 #' @examples "todo"
 get_emptyslide_table <- function(number_of_rows = 1) {
-
   data.table(
-    add_order    = NA_integer_,
-    robo_content   = NA_character_,
-    class_r      = NA_character_,
-    content      = list(list()),
-    dotdotdot    = list(list()),
-    hint         = list(list()),
+    add_order = NA_integer_,
+    robo_content = NA_character_,
+    class_r = NA_character_,
+    content = list(list()),
+    dotdotdot = list(list()),
+    hint = list(list()),
     user_selection_layout = NA_integer_,
-    user_selection_shapeid = NA_integer_
+    user_selection_shapeid = NA_character_
   )[rep(1, number_of_rows)]
-
 }
 
 #' @export
@@ -328,7 +316,6 @@ robocop <-
     #'   TODO
     public = list(
       initialize = function(rpptx, position_precision = 0.5) {
-
         stop_if_not_rpptx(rpptx)
 
         # get mapping table: map PowerPoint types, robocop content and r classes
@@ -342,7 +329,6 @@ robocop <-
 
         # empty slide in current slide slot
         self$slide_candidate <- copy(self$slide_empty)
-
       },
 
       #' @field layout_overview (`data.frame`)\cr
@@ -382,12 +368,39 @@ robocop <-
       #' TODO
       slides = list(),
 
+      #' @field cursor (`list`)\cr
+      #' TODO
+      add_constraint = list(),
+
+      #' @description TODO
+      get_layout_overview = function() {
+        # if any constraints
+        if (length(self$add_constraint)) {
+          # filter layout_overview
+          self$layout_overview[
+            add_constraint,
+            on = names(add_constraint)
+          ]
+        } else {
+          self$layout_overview
+        }
+      },
+
       #' @description TODO
       materialise_candidate = function() {
         # add slide to slidedeck
         self[["slides"]][[length(self$slides) + 1]] <- self$slide_candidate[!is.na(add_order)]
 
-        # add emtpy instruction set
+        # replace all layout ids with the last added entry
+        self[["slides"]][[length(self$slides) + 1]][
+          ,
+          layout_id := .SD[!is.na(layout_id), ][add_order == max(add_order), layout_id]
+        ]
+
+        # reset add constraint
+        self$add_constraint <- list()
+
+        # reset to an empty instruction set
         self$slide_candidate <- copy(self$slide_empty)
       },
 
@@ -396,20 +409,38 @@ robocop <-
         # self <- my_layout$robocop
         # .x <- 2
 
+        # if any slides
         if (length(self$slides)) {
+          # map through materialised slides and return (presentation) result as list
           purrr::map(
             1:length(self$slides),
             ~ {
-              # map slide and layout by robo_content and class_r by layout slide_id
-              self$layout_overview[
-                placeholder_n >= self$slides[[.x]][, .N],
-                list(id, layout_class, placeholder_n, placement_order, default_slide_perclass, class_count = order(placement_order)),
-                by = c("robo_content", "layout_id", "class_r")
-              ] |>
+              # if user selected layout
+              if (self$slides[[.x]][, any(!is.na(user_selection_layout))]) {
+                stopifnot(self$slides[[.x]][!is.na(user_selection_layout), uniqueN(user_selection_layout) == 1])
+
+                layout_candidate <-
+                  self$layout_overview[
+                    layout_id == self$slides[[.x]][!is.na(user_selection_layout), user_selection_layout[1]],
+                    list(id, layout_class, placeholder_n, placement_order, default_slide_perclass, class_count = order(placement_order)),
+                    by = c("robo_content", "layout_id", "class_r")
+                  ]
+              } else {
+                layout_candidate <-
+                  self$layout_overview[
+                    placeholder_n >= self$slides[[.x]][, .N],
+                    list(id, layout_class, placeholder_n, placement_order, default_slide_perclass, class_count = order(placement_order)),
+                    by = c("robo_content", "layout_id", "class_r")
+                  ]
+              }
+
+              # match slide and layout by robo_content and class_r by layout slide_id
+              layout_candidate |>
                 merge(
                   self$slides[[.x]][
-                    !is.na(robo_content),
-                    list(slide_filter = T, class_count = order(add_order)),
+                    !is.na(robo_content) &
+                      is.na(user_selection_shapeid),
+                    list(shape_weight = 1, class_count = order(add_order)),
                     by = c("class_r", "robo_content")
                   ],
                   by = c("robo_content", "class_count", "class_r"),
@@ -417,12 +448,31 @@ robocop <-
                 ) ->
               layout_selection
 
-              # complete robo_content(es)
+              # if user selected ids
+              if (self$slides[[.x]][, any(!is.na(user_selection_shapeid))]) {
+                # append user selected ids
+                layout_selection <-
+                  rbind(
+                    layout_selection,
+                    layout_candidate |>
+                      merge(
+                        self$slides[[.x]][
+                          !is.na(user_selection_shapeid),
+                          list(shape_weight = 100),
+                          by = list(id = user_selection_shapeid)
+                        ],
+                        by = "id",
+                        all.y = T
+                      )
+                  )
+              }
+
+              # complete robo_content(s)
               if (self$slides[[.x]][, any(is.na(robo_content))]) {
                 layout_selection <-
                   layout_selection |>
                   merge(
-                    self$slides[[.x]][is.na(robo_content), list(add_order, class_r, slide_filter = T)],
+                    self$slides[[.x]][is.na(robo_content), list(add_order, class_r, shape_weight = 1)],
                     by.x = c("class_r", "placement_order"),
                     by.y = c("class_r", "add_order"),
                     all.x = T
@@ -430,26 +480,41 @@ robocop <-
 
                 layout_selection[
                   ,
-                  slide_filter := slide_filter.x | slide_filter.y
+                  shape_weight := sum(shape_weight.x, shape_weight.y) - 1
                 ]
-                layout_selection[, ":="(slide_filter.x = NULL, slide_filter.y = NULL)]
+                layout_selection[, ":="(shape_weight.x = NULL, shape_weight.y = NULL)]
               }
 
               # complete layout selection
-              selected_layout <-
-                layout_selection[,
-                  sum(slide_filter, na.rm = T),
-                  by = c("layout_id", "layout_class", "default_slide_perclass", "placeholder_n")
-                ][V1 == max(V1) & default_slide_perclass == layout_id, ][placeholder_n == min(placeholder_n), ][layout_id == min(layout_id), layout_id]
+              if (self$slides[[.x]][, any(!is.na(user_selection_layout))]) {
+                selected_layout <-
+                  self$slides[[.x]][!is.na(user_selection_layout), user_selection_layout[1]]
+              } else {
+                selected_layout <-
+                  layout_selection[,
+                    sum(shape_weight, na.rm = T),
+                    by = c("layout_id", "layout_class", "default_slide_perclass", "placeholder_n")
+                  ][V1 == max(V1) & default_slide_perclass == layout_id, ][placeholder_n == min(placeholder_n), ][layout_id == min(layout_id), layout_id]
+              }
 
-              self$slides[[.x]][, list(add_order, class_r, content)] %>%
-                merge(
-                  self$layout_overview[
-                    layout_id == selected_layout,
-                  ],
-                  by.x = c("add_order", "class_r"),
-                  by.y = c("placement_order", "class_r")
-                )
+              rbind(
+                self$slides[[.x]][is.na(user_selection_shapeid), list(add_order, class_r, content)] |>
+                  merge(
+                    self$layout_overview[
+                      layout_id == selected_layout,
+                    ],
+                    by.x = c("add_order", "class_r"),
+                    by.y = c("placement_order", "class_r")
+                  ),
+                self$slides[[.x]][!is.na(user_selection_shapeid), list(content, id = user_selection_shapeid)] |>
+                  merge(
+                    self$layout_overview[
+                      layout_id == selected_layout,
+                    ],
+                    by = "id"
+                  ) |>
+                  data.table::setnames("placement_order", "add_order")
+              )
             }
           )
         } else {
@@ -471,7 +536,7 @@ robocop <-
             ":="(
               add_order = 1:length(content_list),
               robo_content = names(content_list),
-              class_r = purrr::map_chr(content_list, ~class(.x)[length(class(.x))]),
+              class_r = purrr::map_chr(content_list, ~ class(.x)[length(class(.x))]),
               content = stats::setNames(content_list, NULL)
             )
           ]

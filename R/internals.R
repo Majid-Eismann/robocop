@@ -8,7 +8,6 @@
 #' @export
 #' @examples "todo"
 rclass_to_robo_content <- function(x) {
-
   result <-
     purrr::map_chr(
       class(x),

@@ -7,21 +7,30 @@
 #' @export
 #'
 #' @examples "todo"
-add <- function(robopptx, content = NULL, layout = NA_integer_, shapeid = NA_integer_,
+add <- function(robopptx, content = NULL, layoutid = NA_integer_, shapeid = NA_character_,
                 hint = NULL, ..., robo_content = NA_character_, r_class = NA_character_) {
-  stop_if_not_robopptx(my_layout)
+  stop_if_not_robopptx(robopptx)
+  stop_if_not_correct_shapeid(shapeid, robopptx, robo_content = robo_content)
+  stop_if_not_correct_layoutid(layoutid, robopptx, robo_content = robo_content)
 
   dots <- list(...)
 
   add_position <- robopptx$robocop$slide_candidate[!is.na(add_order), .N] + 1
+
+  # set cursor layout id
+  if (!is.na(layoutid)) {
+    robopptx$robocop$add_constraint$layout_id <- as.integer(layoutid)
+  } else if (!is.na(robopptx$robocop$add_constraint$layout_id)) {
+    layoutid <- robopptx$robocop$add_constraint$layout_id
+  }
 
   robopptx$robocop$slide_candidate[
     add_position,
     ":="(
       add_order = add_position,
       content = list(list(..content)),
-      user_selection_layout = layout,
-      user_selection_shapeid = shapeid,
+      user_selection_layoutid = as.integer(layoutid),
+      user_selection_shapeid = as.character(shapeid),
       hint = list(list(hint)),
       dotdotdot = list(list(dots)),
       robo_content = ifelse(
@@ -48,13 +57,13 @@ add <- function(robopptx, content = NULL, layout = NA_integer_, shapeid = NA_int
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_title <- function(robopptx, title = NULL, layout = NA_integer_,
+add_title <- function(robopptx, title = NULL, layoutid = NA_integer_,
                       shapeid = NA_integer_, hint = NULL) {
   add(
     robopptx = robopptx,
     content = title,
     robo_content = "title",
-    layout = layout,
+    layoutid = layoutid,
     shapeid = shapeid,
     hint = hint
   )
@@ -68,13 +77,13 @@ add_title <- function(robopptx, title = NULL, layout = NA_integer_,
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_subtitle <- function(robopptx, subtitle = NULL, layout = NA_integer_,
+add_subtitle <- function(robopptx, subtitle = NULL, layoutid = NA_integer_,
                          shapeid = NA_integer_, hint = NULL) {
   add(
     robopptx = robopptx,
     content = subtitle,
     robo_content = "subtitle",
-    layout = layout,
+    layoutid = layoutid,
     shapeid = shapeid,
     hint = hint
   )
@@ -88,13 +97,13 @@ add_subtitle <- function(robopptx, subtitle = NULL, layout = NA_integer_,
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_text <- function(robopptx, text = NULL, layout = NA_integer_,
+add_text <- function(robopptx, text = NULL, layoutid = NA_integer_,
                      shapeid = NA_integer_, hint = NULL) {
   add(
     robopptx = robopptx,
     content = text,
     robo_content = "text",
-    layout = layout,
+    layoutid = layoutid,
     shapeid = shapeid,
     hint = hint
   )
@@ -108,13 +117,13 @@ add_text <- function(robopptx, text = NULL, layout = NA_integer_,
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_footer <- function(robopptx, footer = NULL, layout = NA_integer_,
+add_footer <- function(robopptx, footer = NULL, layoutid = NA_integer_,
                        shapeid = NA_integer_, hint = NULL) {
   add(
     robopptx = robopptx,
     content = footer,
     robo_content = "footer",
-    layout = layout,
+    layoutid = layoutid,
     shapeid = shapeid,
     hint = hint
   )
@@ -128,7 +137,7 @@ add_footer <- function(robopptx, footer = NULL, layout = NA_integer_,
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_table <- function(robopptx, table = NULL, layout = NA_integer_,
+add_table <- function(robopptx, table = NULL, layoutid = NA_integer_,
                       shapeid = NA_integer_, hint = NULL) {
   table <- as.data.frame(table)
 
@@ -136,7 +145,7 @@ add_table <- function(robopptx, table = NULL, layout = NA_integer_,
     robopptx = robopptx,
     content = table,
     robo_content = "table",
-    layout = layout,
+    layoutid = layoutid,
     shapeid = shapeid,
     hint = hint
   )
@@ -150,7 +159,7 @@ add_table <- function(robopptx, table = NULL, layout = NA_integer_,
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-add_graph <- function(robopptx, graph = NULL, layout = NA_integer_,
+add_graph <- function(robopptx, graph = NULL, layoutid = NA_integer_,
                       shapeid = NA_integer_, hint = NULL, ...) {
   # if image is given as path - check file and filetype
   if (class(graph)[1] == "character") {
@@ -162,7 +171,7 @@ add_graph <- function(robopptx, graph = NULL, layout = NA_integer_,
       content = graph,
       robo_content = "graph",
       r_class = "external_img",
-      layout = layout,
+      layoutid = layoutid,
       shapeid = shapeid,
       hint = hint
     )
@@ -171,7 +180,7 @@ add_graph <- function(robopptx, graph = NULL, layout = NA_integer_,
       robopptx = robopptx,
       content = graph,
       robo_content = "graph",
-      layout = layout,
+      layoutid = layoutid,
       shapeid = shapeid,
       hint = hint
     )
@@ -187,9 +196,7 @@ add_graph <- function(robopptx, graph = NULL, layout = NA_integer_,
 #' @export
 #' @examples "todo"
 add_slide <- function(robopptx, ...) {
-  # stopifnot("robopptx" %in% class(robopptx))
   stop_if_not_robopptx(my_layout)
-
 
   args <- list(...)
 
@@ -212,6 +219,10 @@ add_slide <- function(robopptx, ...) {
 #' @return A `robopptx` object.
 #' @export
 #' @examples "todo"
-select_layout <- function(robopptx, ...) {
+select_layout <- function(robopptx, layoutid) {
+  stop_if_not_correct_layoutid(layoutid, robopptx)
 
+  robopptx$robocop$add_constraint$layout_id <- as.integer(layoutid)
+
+  invisible(robopptx)
 }

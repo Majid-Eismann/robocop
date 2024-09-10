@@ -16,6 +16,41 @@ stop_if_not_robopptx <- \(x) {
   stop_if_not_class(x, "robopptx")
 }
 
+stop_if_not_correct_shapeid <- \(shapeid, robopptx, robo_content = NA_character_) {
+  stop_if_not_robopptx(robopptx)
+  if (is.na(robo_content)) {
+    possible_ids <- robopptx$robocop$get_layout_overview()[, sort(unique(id))]
+  } else {
+    filter_content <- robo_content
+    possible_ids <- robopptx$robocop$get_layout_overview()[robo_content == filter_content, sort(unique(id))]
+  }
+  check <- all(is.na(shapeid)) || all(as.character(shapeid) %chin% possible_ids)
+
+  if (!check) {
+    cli::cli_abort(
+      "Expected shapeids {.val {possible_ids}}. Got {.val {sort(setdiff(shapeid, possible_ids))}}"
+    )
+  }
+}
+
+stop_if_not_correct_layoutid <- \(layoutid, robopptx, robo_content = NA_character_) {
+  stop_if_not_robopptx(robopptx)
+  if (is.na(robo_content)) {
+    possible_layoutids <- robopptx$robocop$get_layout_overview()[, sort(unique(layout_id))]
+  } else {
+    filter_content <- robo_content
+    possible_layoutids <- robopptx$robocop$get_layout_overview()[robo_content == filter_content, sort(unique(layout_id))]
+  }
+  check <- all(is.na(layoutid)) || all(layoutid %in% possible_layoutids)
+
+  if (!check) {
+    cli::cli_abort(
+      "Expected shapeids {.val {possible_layoutids}}. Got {.val {sort(setdiff(layoutid, possible_layoutids))}}"
+    )
+  }
+}
+
+
 
 #' Open local file in default application
 #' @param path Path to file.

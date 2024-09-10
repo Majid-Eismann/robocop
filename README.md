@@ -23,11 +23,4 @@ This is a basic example.
 
 ``` r
 library(robocop)
-# Warning: replacing previous import 'data.table::transpose' by
-# 'purrr::transpose' when loading 'robocop'
-# 
-# Attaching package: 'robocop'
-# The following object is masked from 'package:base':
-# 
-#     materialise
 ```

@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-## RoboCop: An R Package for quickly creating PowerPoint presentations
+## robocop: An R Package for quickly creating PowerPoint presentations
 
-Most data professionals prefer to avoid using PowerPoint presentations due to the manual effort involved. However, many customers and stakeholders still expect PowerPoint presentations. To minimize the time spent creating them, you can use the RoboCop package, which builds on the powerful officer package. The idea is simple: you provide some content to a function set, and RoboCop handles the rest. While it’s not as sophisticated as officer for creating pixel-perfect slides, RoboCop quickly arranges content on slides using PowerPoint layouts. If the resulting layout isn't polished enough, it can be easily refined manually by others.
+Most data professionals prefer to avoid using PowerPoint presentations due to the manual effort involved. However, many customers and stakeholders still expect PowerPoint presentations. To minimize the time spent creating them, you can use the robocop package, which builds on the powerful officer package. The idea is simple: you provide some content to a function set, and robocop handles the rest. While it’s not as sophisticated as officer for creating pixel-perfect slides, robocop quickly arranges content on slides using PowerPoint layouts. If the resulting layout isn't polished enough, it can be easily refined manually by others.
 
 ## How to use
 
@@ -25,69 +25,69 @@ After loading a layout via load_layout() function you can easily add content to 
 ### Import PowerPoint to extract layouts
 
 ```r
-my_layout <- load_layout(system.file("extdata", "german_locale.pptx", package = "RoboCop"))
+my_layout <- load_layout(system.file("extdata", "german_locale.pptx", package = "robocop"))
 
 # adding layout with duplicated and renaming duplicates
-my_layout_rename <- load_layout(system.file("extdata", "german_locale.pptx", package = "RoboCop"))
+my_layout_rename <- load_layout(system.file("extdata", "german_locale.pptx", package = "robocop"))
 
 # adding layout with duplicated and renaming duplicates
-my_layout_delete <- load_layout(system.file("extdata", "german_locale.pptx", package = "RoboCop"))
+my_layout_delete <- load_layout(system.file("extdata", "german_locale.pptx", package = "robocop"))
 ```
 
 ### Add content to a slide candidate
 
-A slide candidate is a basket / memory for added content until its materialiseed/materialized. You can conveniently add content step by step, precisely or by letting RoboCop guess or plug in multiple candidates by using lists, json etc. 
+A slide candidate is a basket / memory for added content until its materialiseed/materialized. You can conveniently add content step by step, precisely or by letting robocop guess or plug in multiple candidates by using lists, json etc. 
 
 ```r
 # Add content by calling add_ functions to slide candidate
-add_title(my_layout, "Hello RoboCop!")
+add_title(my_layout, "Hello robocop!")
 add_subtitle(my_layout, "slide with add functions")
-add_text(my_layout, "RoboCop goes step by step...")
+add_text(my_layout, "robocop goes step by step...")
 
 ## materialise slide candidate
 materialise(my_layout)
 
-# Add content by calling add() to slide candidate and let RoboCop guess its content
-add(my_layout, "Hello RoboCop!")
+# Add content by calling add() to slide candidate and let robocop guess its content
+add(my_layout, "Hello robocop!")
 add(my_layout, "slide with add() function")
-add(my_layout, "RoboCop guessed")
+add(my_layout, "robocop guessed")
 
 materialise(my_layout)
 
 slide(my_layout) <-
   my_layout |>
-  add("Hello RoboCop!") |>
+  add("Hello robocop!") |>
   add("slide with adding via piping") |>
-  add("RoboCop likes piping")
+  add("robocop likes piping")
 
 # # Add content by using magrittr piping and implicitly materialiseing by assignment
 # require(magrittr)
 # slide(my_layout) %<>%
-# add("Hello RoboCop!") %>%
+# add("Hello robocop!") %>%
 # add("slide with addding via magrittr piping") %>%
-# add("RoboCop likes magrittr")
+# add("robocop likes magrittr")
 
 # Add content by using `+` and implicitly materialiseing by assignment
 slide(my_layout) <-
   my_layout +
-  "Hello RoboCop!" +
+  "Hello robocop!" +
   "slide with addding via + operator" +
-  "RoboCop likes ggplot"
+  "robocop likes ggplot"
 
 
 # add a slide at once
 add_slide(
   my_layout,
-  title = "Hello RoboCop!",
+  title = "Hello robocop!",
   subtitle = "Slide at once added via add_slide(...)",
-  text = "RoboCop functions"
+  text = "robocop functions"
 )
 
 # add a slide at once
 list(
-  title = "Hello RoboCop!",
+  title = "Hello robocop!",
   subtitle = "Slide at once added via add_slide(...)",
-  text = "RoboCop functions"
+  text = "robocop functions"
 ) |>
   add_slide(robopptx = my_layout)
 
@@ -120,5 +120,5 @@ add_slide(
 ### Export slide set to a PowerPoint file
 ```r
 ## export slide set
-export(my_layout, "RoboCop.pptx")
+export(my_layout, "robocop.pptx")
 ```

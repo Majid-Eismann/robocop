@@ -2,7 +2,7 @@
 % Please edit documentation in R/internals.R
 \name{materialise}
 \alias{materialise}
-\title{materialise current slide candidate into a slide}
+\title{Materialise current slide candidate into a slide}
 \usage{
 materialise(robopptx)
 }
@@ -13,7 +13,7 @@ materialise(robopptx)
 A \code{robopptx} object.
 }
 \description{
-materialise current slide candidate into a slide
+Materialise current slide candidate into a slide
 }
 \examples{
 "todo"

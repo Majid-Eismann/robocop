@@ -23,6 +23,17 @@ TODO}
 
 \item{\code{slides}}{(\code{list})\cr
 TODO}
+
+\item{\code{cursor}}{(\code{list})\cr
+TODO}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{cursor}}{(\code{list})\cr
+TODO}
 }
 \if{html}{\out{</div>}}
 }
@@ -33,6 +44,7 @@ TODO}
 \item \href{#method-robocop-show_layout}{\code{robocop$show_layout()}}
 \item \href{#method-robocop-show_slide}{\code{robocop$show_slide()}}
 \item \href{#method-robocop-show_slide_candidate}{\code{robocop$show_slide_candidate()}}
+\item \href{#method-robocop-get_layout_overview}{\code{robocop$get_layout_overview()}}
 \item \href{#method-robocop-materialise_candidate}{\code{robocop$materialise_candidate()}}
 \item \href{#method-robocop-join_slides}{\code{robocop$join_slides()}}
 \item \href{#method-robocop-add_slide}{\code{robocop$add_slide()}}
@@ -102,6 +114,16 @@ TODO
 TODO
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{robocop$show_slide_candidate()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-robocop-get_layout_overview"></a>}}
+\if{latex}{\out{\hypertarget{method-robocop-get_layout_overview}{}}}
+\subsection{Method \code{get_layout_overview()}}{
+TODO
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{robocop$get_layout_overview()}\if{html}{\out{</div>}}
 }
 
 }

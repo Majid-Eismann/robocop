@@ -9,6 +9,7 @@
 #' @export
 #' @examples "todo"
 #' obj <- new_robopptx()
+#' @rawNamespace import(purrr, except = transpose)
 new_robopptx <- function(path = NULL, clean = "rename",
                          delete_slides = FALSE, position_precision = 0.5) {
   if (is.null(path)) {

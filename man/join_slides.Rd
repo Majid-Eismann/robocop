@@ -2,7 +2,7 @@
 % Please edit documentation in R/internals.R
 \name{join_slides}
 \alias{join_slides}
-\title{materialise / materialize current slide candidate into a slide}
+\title{Join all slide candidates into a presentation}
 \usage{
 join_slides(robopptx)
 }
@@ -13,7 +13,7 @@ join_slides(robopptx)
 TODO
 }
 \description{
-materialise / materialize current slide candidate into a slide
+Join all slide candidates into a presentation
 }
 \examples{
 "todo"

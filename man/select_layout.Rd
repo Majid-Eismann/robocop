@@ -4,7 +4,7 @@
 \alias{select_layout}
 \title{Add content to layout candidate}
 \usage{
-select_layout(robopptx, ...)
+select_layout(robopptx, layoutid)
 }
 \arguments{
 \item{robopptx}{robopptx Imported layout file from \link{load_layout}}

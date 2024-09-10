@@ -8,7 +8,7 @@
 robocop is an extension to the officer package to populate PowerPoint presentations very fast.
 }
 \author{
-\strong{Maintainer}: Majid Eismann \email{yourself@somewhere.net}
+\strong{Maintainer}: Majid Eismann \email{majid-eismann@posteo.de}
 
 Authors:
 \itemize{

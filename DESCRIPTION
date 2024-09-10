@@ -2,7 +2,7 @@ Package: robocop
 Title: Easily populate PowerPoint presentation using its layouts
 Version: 0.1.0.9000
 Authors@R: c(
-    person(given = "Majid", family = "Eismann", email = "yourself@somewhere.net", 
+    person(given = "Majid", family = "Eismann", email = "majid-eismann@posteo.de", 
            role = c("aut", "cre")),
     person(given = "Mark", family = "Heckmann", email = "heckmann.mark@gmail.com", 
            role = c("aut"), comment = c(ORCID = "0000-0002-0736-7417"))

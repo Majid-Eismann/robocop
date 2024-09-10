@@ -4,7 +4,6 @@
 #'
 #' @return character robocop content name
 #' @keywords internal
-#' @import purrr
 #' @export
 #' @examples "todo"
 rclass_to_robo_content <- function(x) {

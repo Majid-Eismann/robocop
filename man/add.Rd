@@ -7,8 +7,8 @@
 add(
   robopptx,
   content = NULL,
-  layout = NA_integer_,
-  shapeid = NA_integer_,
+  layoutid = NA_integer_,
+  shapeid = NA_character_,
   hint = NULL,
   ...,
   robo_content = NA_character_,

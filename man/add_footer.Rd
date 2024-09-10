@@ -7,7 +7,7 @@
 add_footer(
   robopptx,
   footer = NULL,
-  layout = NA_integer_,
+  layoutid = NA_integer_,
   shapeid = NA_integer_,
   hint = NULL
 )

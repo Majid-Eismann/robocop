@@ -20,7 +20,7 @@ add <- function(robopptx, content = NULL, layoutid = NA_integer_, shapeid = NA_c
   # set cursor layout id
   if (!is.na(layoutid)) {
     robopptx$robocop$add_constraint$layout_id <- as.integer(layoutid)
-  } else if (!is.na(robopptx$robocop$add_constraint$layout_id)) {
+  } else if (!is.null(robopptx$robocop$add_constraint$layout_id)) {
     layoutid <- robopptx$robocop$add_constraint$layout_id
   }
 

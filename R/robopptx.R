@@ -393,9 +393,10 @@ robocop <-
         self[["slides"]][[length(self$slides) + 1]] <- self$slide_candidate[!is.na(add_order)]
 
         # replace all layout ids with the last added entry
-        self[["slides"]][[length(self$slides) + 1]][
+        if (self[["slides"]][[length(self$slides)]][, any(!is.na(user_selection_layoutid))])
+        self[["slides"]][[length(self$slides)]][
           ,
-          layout_id := .SD[!is.na(layout_id), ][add_order == max(add_order), layout_id]
+          user_selection_layoutid := .SD[!is.na(user_selection_layoutid), ][add_order == max(add_order), user_selection_layoutid]
         ]
 
         # reset add constraint

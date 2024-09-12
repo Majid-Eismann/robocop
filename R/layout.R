@@ -5,7 +5,6 @@
 #' @export
 #' @examples "todo"
 layout_duplicate_rename <- function(x) {
-  # stopifnot("rpptx" %in% class(x))
   stop_if_not_rpptx(x)
 
   for (slide_layout in split(x$slideLayouts$get_xfrm_data(), factor(x$slideLayouts$get_xfrm_data()$file))) {
@@ -52,7 +51,6 @@ layout_duplicate_rename <- function(x) {
 #'
 #' @examples "todo"
 layout_duplicate_delete <- function(x, keep_max_id = TRUE) {
-  # stopifnot("rpptx" %in% class(x))
   stop_if_not_rpptx(x)
   for (slide_layout in split(x$slideLayouts$get_xfrm_data(), factor(x$slideLayouts$get_xfrm_data()$file))) {
     for (duplicated_layout in unique(slide_layout$ph_label[duplicated(slide_layout$ph_label)])) {

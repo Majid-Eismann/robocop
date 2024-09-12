@@ -295,7 +295,206 @@ print.robopptx <- function(x, ...) {
   cli::cli_bullets(bullets)
 }
 
+#' @export
+#' @keywords internal
+print.robocontentdict <- function(x, ...) {
+  cli::cli_h2("robocop dictionary of contents")
 
+}
+
+
+#' Materialise current slide candidate into a slide
+#'
+#' @param robopptx robopptx Imported layout file from [load_layout]
+#'
+#' @return A `robopptx` object.
+#' @export
+#' @examples "todo"
+materialise <- function(robopptx) {
+  # stopifnot("robopptx" %in% class(robopptx))
+  stop_if_not_robopptx(robopptx)
+
+  # materialise candidate
+  robopptx$robocop$materialise_candidate()
+
+  invisible(robopptx)
+}
+
+#' Materialise all slides into a presentation
+#'
+#' @param robopptx robopptx Imported layout file from [load_layout]
+#'
+#' @return TODO
+#' @export
+#' @examples "todo"
+materialise_presentation <- function(robopptx) {
+  # stopifnot("robopptx" %in% class(robopptx))
+  stop_if_not_robopptx(robopptx)
+  robopptx$robocop$materialise_presentation()
+}
+
+#' Internal slide function to select possible layout(s)
+#'
+#' @param slide single slide to select layout for
+#' @param robocop_r6 R6
+#'
+#' @return TODO
+#' @examples "todo"
+slide_layout_candidate <- function(slide, robocop_r6) {
+
+  stop_if_not_class(robocop_r6, "R6")
+
+  # if user selected layout
+  if (slide[, any(!is.na(user_selection_layout))]) {
+
+    stopifnot(slide[!is.na(user_selection_layout), uniqueN(user_selection_layout) == 1])
+
+    layout_candidate <-
+      robocop_r6$layout_overview[
+        layout_id == slide[!is.na(user_selection_layout), user_selection_layout[1]],
+        list(id, layout_class, placeholder_n, placement_order, default_slide_perclass, class_count = order(placement_order)),
+        by = c("robo_content", "layout_id", "class_r")
+      ]
+  } else {
+
+    layout_candidate <-
+      robocop_r6$layout_overview[
+        placeholder_n >= slide[, .N],
+        list(id, layout_class, placeholder_n, placement_order, default_slide_perclass, class_count = order(placement_order)),
+        by = c("robo_content", "layout_id", "class_r")
+      ]
+  }
+
+  return(list(result = layout_candidate, decision = list()))
+}
+
+#' Internal slide function to match users content and placeholders
+#'
+#' @param slide single slide to select layout for
+#' @param layout_candidate
+#' @param robocop_r6 R6
+#'
+#' @return TODO
+#' @examples "todo"
+slide_match_placeholder <- function(slide, layout_candidate, robocop_r6) {
+
+  # match slide and layout via robo_content and class_r by layout slide_id
+  #   robo_content is given that robocop does not have to guess
+  layout_candidate |>
+    merge(
+      slide[
+        !is.na(robo_content) & is.na(user_selection_shapeid),
+        list(shape_weight = 1, class_count = order(add_order)),
+        by = c("class_r", "robo_content")
+      ],
+      by = c("robo_content", "class_count", "class_r"),
+      all.x = T
+    ) ->
+    matched_slide
+
+  # if user selected ids
+  if (slide[, any(!is.na(user_selection_shapeid))]) {
+    # append user selected ids (without matching)
+    matched_slide <-
+      rbind(
+        matched_slide,
+        layout_candidate |>
+          merge(
+            slide[
+              !is.na(user_selection_shapeid),
+              list(shape_weight = 100),
+              by = list(id = user_selection_shapeid)
+            ],
+            by = "id",
+            all.y = T
+          )
+      )
+  }
+
+  # robo content is not given - robocop has to guess what content it is
+  if (slide[, any(is.na(robo_content))]) {
+    matched_slide <-
+      matched_slide |>
+      merge(
+        slide[is.na(robo_content), list(add_order, class_r, shape_weight = 1)],
+        by.x = c("class_r", "placement_order"),
+        by.y = c("class_r", "add_order"),
+        all.x = T
+      )
+
+    matched_slide[
+      ,
+      shape_weight := sum(shape_weight.x, shape_weight.y) - 1
+    ]
+    matched_slide[, ":="(shape_weight.x = NULL, shape_weight.y = NULL)]
+  }
+
+  return(list(result = matched_slide, decision = list()))
+
+}
+
+#' Internal slide function to select final layout
+#'
+#' @param slide single slide to select layout for
+#' @param matched_slide
+#'
+#' @return TODO
+#' @examples "todo"
+slide_pick_layout <- function(slide, matched_slide) {
+
+  # if user has picked the layout
+  if (slide[, any(!is.na(user_selection_layout))]) {
+    selected_layout <-
+      slide[!is.na(user_selection_layout), user_selection_layout[1]]
+  # otherwise let robocop pick a layout
+  } else {
+    #
+    selected_layout <-
+      matched_slide[,
+        # sum the number of matched placeholders (1 for each matched, 100 for a user selected shapeid)
+        sum(shape_weight, na.rm = T),
+        by = c("layout_id", "layout_class", "default_slide_perclass", "placeholder_n")
+      ][
+        # select layout with most matched placeholders and use its default class
+        V1 == max(V1) & default_slide_perclass == layout_id,
+      ][layout_id == min(layout_id), layout_id]
+  }
+
+  return(list(result = selected_layout, decision = list()))
+
+}
+
+#' Internal slide function to select final layout
+#'
+#' @param slide
+#' @param robocop_r6 robopptx Imported layout file from [load_layout]
+#' @param selected_layout
+#'
+#' @return TODO
+#' @examples "todo"
+slide_finalize <- function(slide, robocop_r6, selected_layout) {
+
+  rbind(
+    ##!!! TODO has to be matched_placeholder filtered for selected_layout
+    slide[is.na(user_selection_shapeid), list(add_order, class_r, content)] |>
+      merge(
+        robocop_r6$layout_overview[
+          layout_id == selected_layout,
+        ],
+        by.x = c("add_order", "class_r"),
+        by.y = c("placement_order", "class_r")
+      ),
+    slide[!is.na(user_selection_shapeid), list(content, id = user_selection_shapeid)] |>
+      merge(
+        robocop_r6$layout_overview[
+          layout_id == selected_layout,
+        ],
+        by = "id"
+      ) |>
+      data.table::setnames("placement_order", "add_order")
+  )
+
+}
 
 ### robocop R6 class -----
 
@@ -407,118 +606,51 @@ robocop <-
       },
 
       #' @description TODO
-      join_slides = function() {
+      materialise_presentation = function() {
         # self <- my_layout$robocop
         # .x <- 2
 
         # if any slides
         if (length(self$slides)) {
-          # map through materialised slides and return (presentation) result as list
-          purrr::map(
-            1:length(self$slides),
-            ~ {
-              # if user selected layout
-              if (self$slides[[.x]][, any(!is.na(user_selection_layout))]) {
-                stopifnot(self$slides[[.x]][!is.na(user_selection_layout), uniqueN(user_selection_layout) == 1])
 
+            purrr::map(
+              self$slides,
+              ~{
+
+                # refactor and make it plotable/explainable
+                #> possible_layouts
+                # 1. Select possible layouts / User Layout <Performance
+                #    - if all robo_content defined and layout matches perfectly, take the layout
                 layout_candidate <-
-                  self$layout_overview[
-                    layout_id == self$slides[[.x]][!is.na(user_selection_layout), user_selection_layout[1]],
-                    list(id, layout_class, placeholder_n, placement_order, default_slide_perclass, class_count = order(placement_order)),
-                    by = c("robo_content", "layout_id", "class_r")
-                  ]
-              } else {
-                layout_candidate <-
-                  self$layout_overview[
-                    placeholder_n >= self$slides[[.x]][, .N],
-                    list(id, layout_class, placeholder_n, placement_order, default_slide_perclass, class_count = order(placement_order)),
-                    by = c("robo_content", "layout_id", "class_r")
-                  ]
-              }
+                  slide_layout_candidate(slide = .x, robocop_r6 = self)
 
-              # match slide and layout by robo_content and class_r by layout slide_id
-              layout_candidate |>
-                merge(
-                  self$slides[[.x]][
-                    !is.na(robo_content) &
-                      is.na(user_selection_shapeid),
-                    list(shape_weight = 1, class_count = order(add_order)),
-                    by = c("class_r", "robo_content")
-                  ],
-                  by = c("robo_content", "class_count", "class_r"),
-                  all.x = T
-                ) ->
-              layout_selection
-
-              # if user selected ids
-              if (self$slides[[.x]][, any(!is.na(user_selection_shapeid))]) {
-                # append user selected ids
-                layout_selection <-
-                  rbind(
-                    layout_selection,
-                    layout_candidate |>
-                      merge(
-                        self$slides[[.x]][
-                          !is.na(user_selection_shapeid),
-                          list(shape_weight = 100),
-                          by = list(id = user_selection_shapeid)
-                        ],
-                        by = "id",
-                        all.y = T
-                      )
-                  )
-              }
-
-              # complete robo_content(s)
-              if (self$slides[[.x]][, any(is.na(robo_content))]) {
-                layout_selection <-
-                  layout_selection |>
-                  merge(
-                    self$slides[[.x]][is.na(robo_content), list(add_order, class_r, shape_weight = 1)],
-                    by.x = c("class_r", "placement_order"),
-                    by.y = c("class_r", "add_order"),
-                    all.x = T
+                #> match shapes
+                # 2. Merge slide and all layouts (by robo_content, r_class) <
+                # 3. Append user ids
+                # 4. robocop guess elements
+                matched_slide <-
+                  slide_match_placeholder(
+                    slide = .x,
+                    robocop_r6 = self,
+                    layout_candidate = layout_candidate$result
                   )
 
-                layout_selection[
-                  ,
-                  shape_weight := sum(shape_weight.x, shape_weight.y) - 1
-                ]
-                layout_selection[, ":="(shape_weight.x = NULL, shape_weight.y = NULL)]
-              }
+                #> decide layout
+                # 5. Decide which layout to take
+                picked_layout <-
+                  slide_pick_layout(slide = .x, matched_slide = matched_slide$result)
 
-              # complete layout selection
-              if (self$slides[[.x]][, any(!is.na(user_selection_layout))]) {
-                selected_layout <-
-                  self$slides[[.x]][!is.na(user_selection_layout), user_selection_layout[1]]
-              } else {
-                selected_layout <-
-                  layout_selection[,
-                    sum(shape_weight, na.rm = T),
-                    by = c("layout_id", "layout_class", "default_slide_perclass", "placeholder_n")
-                  ][V1 == max(V1) & default_slide_perclass == layout_id, ][placeholder_n == min(placeholder_n), ][layout_id == min(layout_id), layout_id]
-              }
+                #> finalize_slide
+                # 6. Add content to the layout
+                slide_finalize(
+                  slide = .x,
+                  robocop_r6 = self,
+                  selected_layout = picked_layout$result
+                )
 
-              rbind(
-                self$slides[[.x]][is.na(user_selection_shapeid), list(add_order, class_r, content)] |>
-                  merge(
-                    self$layout_overview[
-                      layout_id == selected_layout,
-                    ],
-                    by.x = c("add_order", "class_r"),
-                    by.y = c("placement_order", "class_r")
-                  ),
-                self$slides[[.x]][!is.na(user_selection_shapeid), list(content, id = user_selection_shapeid)] |>
-                  merge(
-                    self$layout_overview[
-                      layout_id == selected_layout,
-                    ],
-                    by = "id"
-                  ) |>
-                  data.table::setnames("placement_order", "add_order")
-              )
-            }
-          )
+              }
+            )
+
         } else {
           warnings("No slides to join. Forgot to add content and/or materialise slide(s)?")
         }

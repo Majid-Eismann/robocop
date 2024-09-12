@@ -46,7 +46,7 @@ TODO}
 \item \href{#method-robocop-show_slide_candidate}{\code{robocop$show_slide_candidate()}}
 \item \href{#method-robocop-get_layout_overview}{\code{robocop$get_layout_overview()}}
 \item \href{#method-robocop-materialise_candidate}{\code{robocop$materialise_candidate()}}
-\item \href{#method-robocop-join_slides}{\code{robocop$join_slides()}}
+\item \href{#method-robocop-materialise_presentation}{\code{robocop$materialise_presentation()}}
 \item \href{#method-robocop-add_slide}{\code{robocop$add_slide()}}
 \item \href{#method-robocop-explain}{\code{robocop$explain()}}
 \item \href{#method-robocop-clone}{\code{robocop$clone()}}
@@ -138,12 +138,12 @@ TODO
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-robocop-join_slides"></a>}}
-\if{latex}{\out{\hypertarget{method-robocop-join_slides}{}}}
-\subsection{Method \code{join_slides()}}{
+\if{html}{\out{<a id="method-robocop-materialise_presentation"></a>}}
+\if{latex}{\out{\hypertarget{method-robocop-materialise_presentation}{}}}
+\subsection{Method \code{materialise_presentation()}}{
 TODO
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{robocop$join_slides()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{robocop$materialise_presentation()}\if{html}{\out{</div>}}
 }
 
 }

@@ -5,118 +5,75 @@
 #' @return character robocop content name
 #' @keywords internal
 #' @export
+#' @examples robocontent_dictionary()
+robocontent_dictionary <- function() {
+
+  # todo: add typicla r classes
+
+  # positive list of known R classes to be handled by officer and robocop R-package
+  dict <-
+  list(
+    character = "text",
+    POSIXct = "date",
+    POSIXt = "date",
+    Date = "date",
+    ## graph
+    ggplot = "graph",
+    gg = "graph",
+    ms_chart = "graph",
+    ## table
+    data.frame = "table",
+    data.table = "table",
+    tbl_df = "table",
+    tbl = "table"
+  )
+
+  dict_table <-
+  data.table::data.table(
+    r_class = names(dict),
+    robo_content = unlist(dict, use.names = F)
+  )
+
+  class(dict_table) <- c("robocontentdict", class(dict_table))
+
+  return(dict_table)
+
+}
+
+#' Group common R classes for a PowerPoint placeholder mapping
+#'
+#' @param x object
+#'
+#' @return character robocop content name
+#' @keywords internal
+#' @export
 #' @examples "todo"
-rclass_to_robo_content <- function(x) {
+rclass_to_robo_content <- function(x, abort_if_nomatch = TRUE, return_for_print = FALSE) {
+
   result <-
-    purrr::map_chr(
-      class(x),
-      switch,
-      character = "text",
-      POSIXct = "date",
-      POSIXt = "date",
-      Date = "date",
-      ## graph
-      ggplot = "graph",
-      gg = "graph",
-      ms_chart = "graph",
-      ## table
-      data.frame = "table",
-      data.table = "table",
-      tbl_df = "table",
-      tbl = "table",
-      NA_character_
-    ) |>
-    unique() |>
-    na.omit()
+  robocontent_dictionary()[
+    r_class %in% class(x),
+  ]
 
+  if (abort_if_nomatch) stopifnot(result[, uniqueN(robo_content) != 1])
 
-  stopifnot(length(result) == 1)
+  if (return_for_print) {
+    return(result)
+  } else return(result[, unique(robo_content)])
 
-  return(result)
 }
 
-#' Materialise current slide candidate into a slide
+#' Verify that robocop can draw R-Object on PowerPoint
 #'
-#' @param robopptx robopptx Imported layout file from [load_layout]
+#' @param x object
 #'
-#' @return A `robopptx` object.
-#' @export
-#' @examples "todo"
-materialise <- function(robopptx) {
-  # stopifnot("robopptx" %in% class(robopptx))
-  stop_if_not_robopptx(robopptx)
-
-  # materialise candidate
-  robopptx$robocop$materialise_candidate()
-
-  invisible(robopptx)
-}
-
-#' Join all slide candidates into a presentation
-#'
-#' @param robopptx robopptx Imported layout file from [load_layout]
-#'
-#' @return TODO
-#' @export
-#' @examples "todo"
-join_slides <- function(robopptx) {
-  # stopifnot("robopptx" %in% class(robopptx))
-  stop_if_not_robopptx(robopptx)
-  robopptx$robocop$join_slides()
-}
-
-## Add methods for base operators
-
-#' Adding content with `+` operator
-#'
-#' @param e1 robopptx Imported layout file from [load_layout]
-#' @param e2 object Content to add with [add]
-#'
-#' @return A `robopptx` object.
+#' @return character robocop content name
 #' @keywords internal
 #' @export
-"+.robopptx" <- function(e1, e2) add(robopptx = e1, content = e2)
+#' @examples can_robocop_handle("My Title")
+can_robocop_handle <- function(x) {
 
-#' Register an R6 class as an S4 class
-#'
-#' This makes the R6 class "robopptx" available as an S4 class.
-#'
-#' # @export
-#'
-#' # setOlxdClass(c("robopptx")
+  # todo: make pretty cli print
+  rclass_to_robo_content(x, abort_if_nomatch = FALSE, return_for_print = TRUE)
+}
 
-#' Method for the '+' generic for objects of class 'robopptx'
-#'
-#' @param e1 An object of class 'robopptx'
-#' @param e2 object Content to add with [add]
-#'
-#' @return A `robopptx` object.
-#' @keywords internal
-#' @export
-setMethod(
-  "+",
-  signature = c("robopptx", "ANY"),
-  definition = function(e1, e2) RoboCop::add(robopptx = e1, content = e2)
-)
-
-# `<-` operator
-
-
-#' @export
-setGeneric("slide", function(x) standardGeneric("slide"))
-
-#' Method for the 'myFunction' generic for objects of class 'MyClass'
-#'
-#' @param robopptx robopptx Imported layout file from [load_layout]
-#' @return A `robopptx` object.
-#' @export
-setMethod("slide", "robopptx", function(x) x$slide)
-
-#' @export
-setGeneric("slide<-", function(x, value) standardGeneric("slide<-"))
-
-#' @export
-setMethod("slide<-", "robopptx", function(x) {
-  materialise(x)
-  x
-})

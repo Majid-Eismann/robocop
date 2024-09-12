@@ -16,6 +16,11 @@ stop_if_not_robopptx <- \(x) {
   stop_if_not_class(x, "robopptx")
 }
 
+stop_if_not_robocontentdict <- \(x) {
+  stop_if_not_class(x, "robopptx")
+}
+
+
 stop_if_not_correct_shapeid <- \(shapeid, robopptx, robo_content = NA_character_) {
   stop_if_not_robopptx(robopptx)
   if (is.na(robo_content)) {

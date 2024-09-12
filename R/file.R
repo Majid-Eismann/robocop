@@ -27,7 +27,7 @@ export <- function(robopptx, to = NULL) {
   stop_if_not_robopptx(robopptx)
 
   if (length(robopptx$robocop$slides)) {
-    for (slide in join_slides(robopptx)) {
+    for (slide in materialise_presentation(robopptx)) {
       robopptx <- officer::add_slide(robopptx, layout = slide[1, name], master = slide[1, master_name])
 
       for (element in 1:slide[, .N]) {

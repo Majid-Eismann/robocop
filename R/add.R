@@ -211,6 +211,62 @@ add_slide <- function(robopptx, ...) {
   invisible(robopptx)
 }
 
+## Add methods for base operators
+
+#' Adding content with `+` operator
+#'
+#' @param e1 robopptx Imported layout file from [load_layout]
+#' @param e2 object Content to add with [add]
+#'
+#' @return A `robopptx` object.
+#' @keywords internal
+#' @export
+"+.robopptx" <- function(e1, e2) add(robopptx = e1, content = e2)
+
+#' Register an R6 class as an S4 class
+#'
+#' This makes the R6 class "robopptx" available as an S4 class.
+#'
+#' # @export
+#'
+#' # setOlxdClass(c("robopptx")
+
+#' Method for the '+' generic for objects of class 'robopptx'
+#'
+#' @param e1 An object of class 'robopptx'
+#' @param e2 object Content to add with [add]
+#'
+#' @return A `robopptx` object.
+#' @keywords internal
+#' @export
+setMethod(
+  "+",
+  signature = c("robopptx", "ANY"),
+  definition = function(e1, e2) RoboCop::add(robopptx = e1, content = e2)
+)
+
+# `<-` operator
+
+
+#' @export
+setGeneric("slide", function(x) standardGeneric("slide"))
+
+#' Method for the 'myFunction' generic for objects of class 'MyClass'
+#'
+#' @param robopptx robopptx Imported layout file from [load_layout]
+#' @return A `robopptx` object.
+#' @export
+setMethod("slide", "robopptx", function(x) x$slide)
+
+#' @export
+setGeneric("slide<-", function(x, value) standardGeneric("slide<-"))
+
+#' @export
+setMethod("slide<-", "robopptx", function(x) {
+  materialise(x)
+  x
+})
+
 #' Add content to layout candidate
 #'
 #' @param robopptx robopptx Imported layout file from \link{load_layout}

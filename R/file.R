@@ -54,10 +54,10 @@ export <- function(robopptx, to = NULL) {
     }
 
     if (is.null(to)) {
-      to <- gsub("[.]pptx", "_easypptx.pptx", robopptx$filepath_layout)
+      to <- gsub("[.]pptx", "_robocop.pptx", robopptx$filepath_layout)
     }
 
-    print(robopptx, target = to)
+    officer:::print.rpptx(robopptx, target = to)
   } else {
     warning("No slides added.")
   }

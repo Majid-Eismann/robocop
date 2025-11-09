@@ -254,6 +254,7 @@ get_layout_table <- function(rpptx, position_precision = 0.5) {
   # add additional variables needed by robocop to layout
   layout_table <-
     add_robocop_variables(layout_table, position_precision = position_precision)
+
 }
 
 #' Get mapping table for PowerPoint types, robocop content and r classes
@@ -273,7 +274,9 @@ get_emptyslide_table <- function(number_of_rows = 1) {
     dotdotdot = list(list()),
     hint = list(list()),
     user_selection_layout = NA_integer_,
-    user_selection_shapeid = NA_character_
+    user_selection_shapeid = NA_character_,
+    user_trace_function = NA_character_,
+    description = NA_character_
   )[rep(1, number_of_rows)]
 }
 
@@ -671,7 +674,8 @@ robocop <-
               add_order = 1:length(content_list),
               robo_content = names(content_list),
               class_r = purrr::map_chr(content_list, ~ class(.x)[length(class(.x))]),
-              content = stats::setNames(content_list, NULL)
+              content = stats::setNames(content_list, NULL),
+              user_trace_function = "add_slide"
             )
           ]
 

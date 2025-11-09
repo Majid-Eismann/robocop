@@ -24,6 +24,10 @@ add <- function(robopptx, content = NULL, layoutid = NA_integer_, shapeid = NA_c
     layoutid <- robopptx$robocop$add_constraint$layout_id
   }
 
+  # get user trace function (which specific function was called to add content)
+  user_trace_function <- as.character(sys.call(sys.parent()))[1]
+  if (length(user_trace_function) == 0) user_trace_function <- "add"
+
   robopptx$robocop$slide_candidate[
     add_position,
     ":="(
@@ -31,6 +35,7 @@ add <- function(robopptx, content = NULL, layoutid = NA_integer_, shapeid = NA_c
       content = list(list(..content)),
       user_selection_layoutid = as.integer(layoutid),
       user_selection_shapeid = as.character(shapeid),
+      user_trace_function = ..user_trace_function,
       hint = list(list(hint)),
       dotdotdot = list(list(dots)),
       robo_content = ifelse(
@@ -242,7 +247,7 @@ add_slide <- function(robopptx, ...) {
 setMethod(
   "+",
   signature = c("robopptx", "ANY"),
-  definition = function(e1, e2) RoboCop::add(robopptx = e1, content = e2)
+  definition = function(e1, e2) robocop::add(robopptx = e1, content = e2)
 )
 
 # `<-` operator
